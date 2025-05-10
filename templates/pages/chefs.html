@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Chefs | Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/chefs.css">
+{% endblock %}
+
+{% block content %}
+<!-- Chef Section -->
+<section class="chefs-section">
+    <div class="container">
+        <h2 class="section-title">Meet Our Chefs</h2>
+        <p class="section-description">Discover recipes created by our talented culinary experts, each with their own unique specialties and cooking styles.</p>
+        
+        <div class="chefs-grid">
+            <!-- Chef Card 1 -->
+            <div class="chef-card">
+                <div class="chef-image-container">
+                    <img src="/static/img/cameron.jpg" alt="Chef Cameron Quinn" class="chef-image">
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">Cameron Quinn</h3>
+                    <p class="chef-specialty">Fine Dining Specialist</p>
+                    <p class="chef-bio">Three-Michelin-star chef specializing in elevated cuisine with a focus on locally-sourced ingredients and artistic presentation.</p>
+                    <p class="chef-recipes">18 recipes</p>
+                    <div class="chef-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="chef-profile-link">
+                        <a href="{% url 'chef_cameron' %}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chef Card 2 -->
+            <div class="chef-card">
+                <div class="chef-image-container">
+                    <img src="/static/img/chefs/wade-alexander.jpg" alt="Chef Wade Alexander" class="chef-image">
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">Wade Alexander</h3>
+                    <p class="chef-specialty">Bar Food & Comfort Cuisine</p>
+                    <p class="chef-bio">Specializes in elevated pub grub and comfort food with a gourmet twist. Known for bold flavors and innovative takes on classic bar favorites.</p>
+                    <p class="chef-recipes">24 recipes</p>
+                    <div class="chef-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="chef-profile-link">
+                        <a href="{% url 'chef_wade' %}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chef Card 3 -->
+            <div class="chef-card">
+                <div class="chef-image-container">
+                    <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="chef-image">
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">Alex Molina</h3>
+                    <p class="chef-specialty">Home-Style Cooking</p>
+                    <p class="chef-bio">Expert in creating approachable, delicious meals designed for home cooks. Focuses on simple techniques and everyday ingredients that create exceptional flavors.</p>
+                    <p class="chef-recipes">32 recipes</p>
+                    <div class="chef-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="chef-profile-link">
+                        <a href="{% url 'chef_alex' %}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chef Card 4 - Nathan & Jade -->
+            <div class="chef-card couple-card">
+                <div class="chef-image-container">
+                    <div class="couple-images">
+                        <img src="/static/img/chefs/nathan.jpg" alt="Chef Nathan" class="chef-image nathan-img">
+                        <img src="/static/img/chefs/jade.jpg" alt="Chef Jade" class="chef-image jade-img">
+                        <div class="heart-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">Nathan & Jade</h3>
+                    <p class="chef-specialty">Couples Cooking</p>
+                    <p class="chef-bio">Culinary power couple specializing in date night recipes and collaborative cooking techniques that bring couples together in the kitchen.</p>
+                    <p class="chef-recipes">25 recipes</p>
+                    <div class="chef-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="chef-profile-link">
+                        <a href="{% url 'chef_couple' %}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chef Card 5 - Amanda's Family Cookbook -->
+            <div class="chef-card">
+                <div class="chef-image-container">
+                    <img src="/static/img/chefs/amanda.jpg" alt="Amanda's Family Cookbook" class="chef-image">
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">Amanda's Family Cookbook</h3>
+                    <p class="chef-specialty">Family Recipe Preservation</p>
+                    <p class="chef-bio">Creating a collection of cherished family recipes to pass down to my children, inspired by the cooking traditions my grandmother shared with me.</p>
+                    <p class="chef-recipes">15 recipes</p>
+                    <div class="chef-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                    <div class="chef-profile-link">
+                        <a href="{% url 'chef_amanda' %}" class="btn btn-primary">View Cookbook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="chef-featured-recipes">
+    <div class="container">
+        <h2 class="section-title">Chef's Signature Dishes</h2>
+        <p class="section-description">Try these handpicked recipes from our talented chefs</p>
+        
+        <div class="chef-recipes-grid">
+            <!-- Recipe 1 -->
+            <div class="recipe-card">
+                <div class="recipe-chef">
+                    <img src="/static/img/chefs/cameron-quinn.jpg" alt="Chef Cameron Quinn" class="recipe-chef-img">
+                    <span class="recipe-chef-name">Cameron Quinn</span>
+                </div>
+                <div class="recipe-image-container">
+                    <img src="/static/img/recipes/scallops.jpg" alt="Seared Scallops" class="recipe-card-img">
+                </div>
+                <div class="recipe-card-body">
+                    <span class="category-badge">Fine Dining</span>
+                    <h3 class="recipe-card-title">Seared Scallops with Citrus Reduction</h3>
+                    <p class="recipe-card-desc">Perfectly seared scallops served with a delicate citrus reduction and seasonal micro greens.</p>
+                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            
+            <!-- Recipe 2 -->
+            <div class="recipe-card">
+                <div class="recipe-chef">
+                    <img src="/static/img/chefs/wade-alexander.jpg" alt="Chef Wade Alexander" class="recipe-chef-img">
+                    <span class="recipe-chef-name">Wade Alexander</span>
+                </div>
+                <div class="recipe-image-container">
+                    <img src="/static/img/recipes/loaded-fries.jpg" alt="Loaded Fries" class="recipe-card-img">
+                </div>
+                <div class="recipe-card-body">
+                    <span class="category-badge">Bar Food</span>
+                    <h3 class="recipe-card-title">Gourmet Loaded Fries</h3>
+                    <p class="recipe-card-desc">Triple-cooked fries topped with slow-braised pulled pork, caramelized onions, and smoked cheddar sauce.</p>
+                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            
+            <!-- Recipe 3 -->
+            <div class="recipe-card">
+                <div class="recipe-chef">
+                    <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="recipe-chef-img">
+                    <span class="recipe-chef-name">Alex Molina</span>
+                </div>
+                <div class="recipe-image-container">
+                    <img src="/static/img/recipes/pasta.jpg" alt="Homemade Pasta" class="recipe-card-img">
+                </div>
+                <div class="recipe-card-body">
+                    <span class="category-badge">Home Cooking</span>
+                    <h3 class="recipe-card-title">Simple Homemade Pasta</h3>
+                    <p class="recipe-card-desc">Easy homemade pasta with a classic tomato sauce that anyone can master - no special equipment required.</p>
+                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            
+            <!-- Recipe 4 -->
+            <div class="recipe-card">
+                <div class="recipe-chef">
+                    <div class="recipe-chef-couple">
+                        <img src="/static/img/chefs/nathan.jpg" alt="Chef Nathan & Jade" class="recipe-chef-img">
+                        <span class="recipe-chef-name">Nathan & Jade</span>
+                    </div>
+                </div>
+                <div class="recipe-image-container">
+                    <img src="/static/img/recipes/date-night-risotto.jpg" alt="Date Night Risotto" class="recipe-card-img">
+                </div>
+                <div class="recipe-card-body">
+                    <span class="category-badge">Date Night</span>
+                    <h3 class="recipe-card-title">Two-Person Champagne Risotto</h3>
+                    <p class="recipe-card-desc">A romantic risotto for two that's perfect for date night, with each person taking on different parts of the recipe.</p>
+                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            
+            <!-- Recipe 5 - Amanda's Family Recipe -->
+            <div class="recipe-card">
+                <div class="recipe-chef">
+                    <img src="/static/img/chefs/amanda.jpg" alt="Amanda's Family Cookbook" class="recipe-chef-img">
+                    <span class="recipe-chef-name">Amanda</span>
+                </div>
+                <div class="recipe-image-container">
+                    <img src="/static/img/recipes/apple-pie.jpg" alt="Grandma's Apple Pie" class="recipe-card-img">
+                </div>
+                <div class="recipe-card-body">
+                    <span class="category-badge">Family Desserts</span>
+                    <h3 class="recipe-card-title">Grandma's Apple Pie</h3>
+                    <p class="recipe-card-desc">A treasured family recipe passed down through three generations, featuring a flaky crust and perfectly spiced apple filling.</p>
+                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="become-chef">
+    <div class="container">
+        <div class="become-chef-content">
+            <div class="become-chef-text">
+                <h2>Share Your Culinary Expertise</h2>
+                <p>Are you passionate about cooking? Join our community of talented chefs and share your unique recipes with food enthusiasts around the world.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Create your own chef profile</li>
+                    <li><i class="fas fa-check-circle"></i> Share unlimited recipes</li>
+                    <li><i class="fas fa-check-circle"></i> Get feedback from the community</li>
+                    <li><i class="fas fa-check-circle"></i> Build your cooking reputation</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Apply to Join</a>
+            </div>
+            <div class="become-chef-image">
+                <img src="/static/img/become-chef.jpg" alt="Chef preparing food">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

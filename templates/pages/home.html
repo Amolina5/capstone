@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/home.css">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Discover & Share Delicious Recipes</h1>
+            <p class="hero-subtitle">Join our community of food lovers to find inspiration and share your culinary creations.</p>
+            <div class="hero-actions">
+                <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">Browse Recipes</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-outline">Share Your Recipe</a>
+                {% else %}
+                    <a href="#" class="btn btn-outline">Join Now</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="/static/img/hero-image.jpg" alt="Delicious food arrangement">
+        </div>
+    </div>
+</section>
+
+
+<section class="categories-section">
+    <div class="container">
+        <h2 class="section-title">Browse by Category</h2>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="{% url 'recipes:category_detail' category.slug %}" class="category-card">
+                <i class="fas fa-utensils"></i>
+                <h4>{{ category.name }}</h4>
+                <p>{{ category.recipes.count }} recipes</p>
+            </a>
+            {% empty %}
+            <div class="categories-empty">
+                <p>Categories coming soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% if featured_recipes %}
+<section class="featured-recipes">
+    <div class="container">
+        <h2 class="section-title">Featured Recipes</h2>
+        <div class="recipes-grid">
+            {% for recipe in featured_recipes %}
+            <div class="recipe-card">
+                {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                {% else %}
+                <div class="recipe-card-placeholder">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                {% endif %}
+                <div class="recipe-card-body">
+                    <span class="category-badge">{{ recipe.category.name }}</span>
+                    <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                    <p class="recipe-card-desc">{{ recipe.description|truncatewords:15 }}</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> {{ recipe.total_time }} mins</span>
+                        <span><i class="far fa-user"></i> {{ recipe.author.username }}</span>
+                    </div>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">View All Recipes</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<section class="community-section">
+    <div class="container">
+        <div class="community-content">
+            <div class="community-text">
+                <h2>Join Our Cooking Community</h2>
+                <p>Connect with fellow food enthusiasts, share your culinary experiences, and discover recipes from around the world.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Share your favorite recipes</li>
+                    <li><i class="fas fa-check-circle"></i> Save recipes to your personal cookbook</li>
+                    <li><i class="fas fa-check-circle"></i> Rate and review recipes from others</li>
+                    <li><i class="fas fa-check-circle"></i> Get personalized recipe recommendations</li>
+                </ul>
+                {% if not user.is_authenticated %}
+                <div class="community-cta">
+                    <a href="#" class="btn btn-primary">Sign Up Now</a>
+                    <span>Already a member? <a href="#">Log In</a></span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="community-image">
+                <img src="/static/img/community.jpg" alt="People cooking together">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% if latest_recipes %}
+<section class="latest-recipes">
+    <div class="container">
+        <h2 class="section-title">Latest Recipes</h2>
+        <div class="recipes-grid">
+            {% for recipe in latest_recipes %}
+            <div class="recipe-card">
+                {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                {% else %}
+                <div class="recipe-card-placeholder">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                {% endif %}
+                <div class="recipe-card-body">
+                    <span class="category-badge">{{ recipe.category.name }}</span>
+                    <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                    <p class="recipe-card-desc">{{ recipe.description|truncatewords:15 }}</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> {{ recipe.total_time }} mins</span>
+                        <span><i class="far fa-user"></i> {{ recipe.author.username }}</span>
+                    </div>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No recipes available yet. Be the first to add one!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Get Weekly Recipe Inspiration</h2>
+            <p>Subscribe to our newsletter and receive new recipes, cooking tips, and seasonal meal ideas directly to your inbox.</p>
+            <form class="newsletter-form">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </div>
+                <small class="text-muted">We respect your privacy and will never share your email.</small>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

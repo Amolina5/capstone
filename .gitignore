@@ -1,0 +1,16 @@
+# Bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual Environment
+venv/
+.env/
+*.env
+
+# Database files
+*.sqlite3
+
+# Secret keys and settings
+*.json
+.env

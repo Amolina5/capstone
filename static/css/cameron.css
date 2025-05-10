@@ -1,0 +1,909 @@
+/* Michelin Star Quality CSS
+ * A premium styling for Chef Cameron Quinn's profile
+ * Created for Cookbook - Fine Dining Chef Profiles
+ */
+
+/* ===== FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* ===== VARIABLES ===== */
+:root {
+    /* Colors */
+    --primary-gold: #c8a97e;
+    --primary-gold-light: #e4d5ba;
+    --primary-dark: #1c1c1c;
+    --secondary-dark: #272727;
+    --text-light: #f8f8f8;
+    --text-dark: #272727;
+    --text-muted: #909090;
+    --bg-light: #f8f8f8;
+    --bg-dark: #121212;
+    --border-light: rgba(255, 255, 255, 0.1);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+    
+    /* Typography */
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Montserrat', sans-serif;
+    
+    /* Other */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --box-shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --box-shadow-elevated: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --transition-standard: all 0.3s ease;
+}
+
+/* ===== BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-dark);
+}
+
+h1 {
+    font-size: 3.5rem;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    letter-spacing: -0.3px;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+a {
+    color: var(--primary-gold);
+    text-decoration: none;
+    transition: var(--transition-standard);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ===== HEADER ===== */
+header {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--spacing-md) 0;
+    position: relative;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.logo span {
+    color: var(--primary-gold);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: var(--spacing-md);
+}
+
+nav ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-gold);
+    transition: var(--transition-standard);
+}
+
+nav ul li a:hover {
+    color: var(--primary-gold);
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* ===== HERO SECTION ===== */
+.chef-hero {
+    position: relative;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--spacing-xl) 0;
+}
+
+.chef-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+    z-index: 1;
+}
+
+.chef-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, var(--bg-light), transparent);
+    z-index: 2;
+}
+
+.chef-hero-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.chef-hero-image {
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--box-shadow-elevated);
+    position: relative;
+}
+
+.chef-hero-image::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 80px;
+    height: 80px;
+    background-image: url('/static/img/michelin-star.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+.chef-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.chef-hero-image:hover .chef-image {
+    transform: scale(1.05);
+}
+
+.chef-hero-text {
+    flex: 1;
+}
+
+.chef-hero-text h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-light);
+    position: relative;
+    display: inline-block;
+}
+
+.chef-hero-text h1::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-gold);
+    bottom: -10px;
+    left: 0;
+}
+
+.chef-specialty {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--primary-gold);
+    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    letter-spacing: 1px;
+}
+
+.chef-bio-extended {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: var(--spacing-md);
+    max-width: 90%;
+}
+
+.chef-social-large {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.chef-social-large a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    transition: var(--transition-standard);
+}
+
+.chef-social-large a:hover {
+    background-color: var(--primary-gold);
+    transform: translateY(-3px);
+}
+
+/* ===== BIO SECTION ===== */
+.chef-bio-section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.chef-bio-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-gold), transparent);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    font-size: 2.8rem;
+    color: var(--primary-dark);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-gold);
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chef-bio-content {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.chef-bio-text {
+    flex: 3;
+}
+
+.chef-bio-text p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.chef-bio-text p:first-of-type {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    font-weight: 400;
+}
+
+.chef-bio-text p:first-of-type::first-letter {
+    font-size: 3.5rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 8px;
+    color: var(--primary-gold);
+    font-family: var(--font-heading);
+}
+
+.chef-stats {
+    flex: 2;
+    background-color: #fff;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--box-shadow-subtle);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.chef-stats::before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: var(--primary-gold-light);
+    border-radius: 50%;
+    top: -75px;
+    right: -75px;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-gold-light);
+    color: var(--primary-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    font-size: 1.5rem;
+    transition: var(--transition-standard);
+}
+
+.stat-item:hover .stat-icon {
+    background-color: var(--primary-gold);
+    color: white;
+    transform: scale(1.05);
+}
+
+.stat-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.stat-text p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+/* ===== RECIPES SECTION ===== */
+.chef-featured-recipes, .chef-recipes-section {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--bg-light);
+    position: relative;
+}
+
+.chef-featured-recipes::before, .chef-recipes-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-gold-light), transparent);
+}
+
+.section-description {
+    text-align: center;
+    max-width: 700px;
+    margin: -15px auto var(--spacing-lg);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.chef-recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.recipe-card {
+    background-color: #fff;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-subtle);
+    transition: var(--transition-standard);
+    position: relative;
+}
+
+.recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-elevated);
+}
+
+.recipe-image-container {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.recipe-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.recipe-card:hover .recipe-card-img {
+    transform: scale(1.08);
+}
+
+.recipe-chef {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    padding: 5px 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 30px;
+    z-index: 2;
+}
+
+.recipe-chef-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    border: 2px solid var(--primary-gold);
+}
+
+.recipe-chef-name {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.recipe-card-body {
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+.category-badge {
+    display: inline-block;
+    background-color: var(--primary-gold-light);
+    color: var(--primary-gold);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.recipe-card-title {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+    transition: var(--transition-standard);
+}
+
+.recipe-card:hover .recipe-card-title {
+    color: var(--primary-gold);
+}
+
+.recipe-card-desc {
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: var(--transition-standard);
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 1rem;
+}
+
+.btn-outline {
+    border: 2px solid var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-gold);
+    color: white;
+}
+
+.btn-primary {
+    background-color: var(--primary-gold);
+    color: white;
+    border: 2px solid var(--primary-gold);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--primary-gold);
+}
+
+.view-all-link {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
+/* ===== CHEF TIPS SECTION ===== */
+.chef-tips-section {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--bg-light);
+    position: relative;
+}
+
+.chef-tips-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-gold-light), transparent);
+}
+
+.chef-tips-content {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.chef-tips-text {
+    flex: 1;
+}
+
+.chef-tips-text p {
+    padding-left: var(--spacing-md);
+    border-left: 3px solid var(--primary-gold-light);
+    margin-bottom: var(--spacing-md);
+}
+
+.chef-tips-text p strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: var(--primary-dark);
+}
+
+.chef-tips-image {
+    flex: 1;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-elevated);
+    position: relative;
+}
+
+.chef-tips-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.chef-tips-image:hover img {
+    transform: scale(1.05);
+}
+
+/* ===== BACK TO SECTION ===== */
+.back-to-section {
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--spacing-lg) 0;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary-gold), transparent);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-gold);
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: var(--primary-gold);
+    bottom: -8px;
+    left: 0;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-standard);
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: var(--primary-gold);
+    padding-left: 5px;
+}
+
+.footer-links a i {
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-light);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chef-hero-content, .section-title, .chef-bio-content, .chef-recipes-grid, .chef-tips-content {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.chef-bio-content {
+    animation-delay: 0.2s;
+}
+
+.chef-recipes-grid {
+    animation-delay: 0.4s;
+}
+
+.chef-tips-content {
+    animation-delay: 0.6s;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 1200px) {
+    .chef-hero-image {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .chef-hero-text h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .chef-hero-content, .chef-bio-content, .chef-tips-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .chef-hero-text h1::after, .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .chef-hero-text .chef-bio-extended {
+        max-width: 100%;
+    }
+    
+    .chef-social-large {
+        justify-content: center;
+    }
+    
+    .chef-bio-text p {
+        text-align: left;
+    }
+    
+    .chef-bio-text p:first-of-type::first-letter {
+        font-size: 2.5rem;
+    }
+    
+    .chef-tips-text p {
+        text-align: left;
+        border-left: none;
+        padding-left: 0;
+        border-top: 3px solid var(--primary-gold-light);
+        padding-top: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --spacing-xl: 4rem;
+    }
+    
+    h1 {
+        font-size: 2.8rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    nav ul {
+        margin-top: var(--spacing-sm);
+        justify-content: center;
+    }
+    
+    nav ul li {
+        margin: 0 var(--spacing-xs);
+    }
+    
+    .chef-hero-image {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .chef-recipes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .footer-column {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --spacing-lg: 3rem;
+        --spacing-xl: 3.5rem;
+    }
+    
+    .chef-hero-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .chef-specialty {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .chef-hero {
+        background-color: transparent !important;
+        color: var(--text-dark) !important;
+    }
+    
+    .chef-hero-text h1, .chef-specialty {
+        color: var(--primary-dark) !important;
+    }
+    
+    .chef-hero::before, .chef-hero::after,
+    .chef-bio-section::before, .chef-featured-recipes::before,
+    .chef-tips-section::before, footer::before {
+        display: none !important;
+    }
+    
+    .chef-social-large, nav, .btn, footer {
+        display: none !important;
+    }
+    
+    .chef-bio-text, .chef-stats, .recipe-card {
+        page-break-inside: avoid;
+    }
+}

@@ -1,0 +1,797 @@
+/* nate.css - CSS for Nathan & Jade's Couples Cooking Page */
+
+/* Hero Section */
+.couple-hero {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+    background-image: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.couple-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/static/img/pattern.png');
+    opacity: 0.1;
+    animation: shift-bg 60s linear infinite;
+}
+
+@keyframes shift-bg {
+    0% { background-position: 0 0; }
+    100% { background-position: 1000px 1000px; }
+}
+
+.couple-hero-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.couple-hero-images {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+    animation: float-images 5s ease-in-out infinite;
+}
+
+@keyframes float-images {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.chef-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.chef-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.nathan-img {
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.jade-img {
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.heart-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.heart-overlay i {
+    color: #ff6b6b;
+    font-size: 24px;
+}
+
+.couple-hero-text h1 {
+    margin: 0 0 10px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: text-shadow-pulse 3s infinite;
+}
+
+@keyframes text-shadow-pulse {
+    0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
+    50% { text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2); }
+    100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
+}
+
+.chef-specialty {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    background-color: rgba(255, 107, 107, 0.8);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    transform: rotate(-2deg);
+}
+
+.chef-bio-extended {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.chef-social-large {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.chef-social-large a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    color: #495057;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chef-social-large a:hover {
+    background-color: #ff6b6b;
+    color: #fff;
+    transform: translateY(-3px) rotate(360deg);
+}
+
+.chef-actions {
+    margin-top: 20px;
+}
+
+.couple-bio-section {
+    padding: 60px 0;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.couple-bio-section::before,
+.couple-bio-section::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(252, 203, 144, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.couple-bio-section::before {
+    top: -100px;
+    left: -100px;
+    animation: float-circle 20s infinite alternate ease-in-out;
+}
+
+.couple-bio-section::after {
+    bottom: -100px;
+    right: -100px;
+    animation: float-circle 15s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float-circle {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    font-weight: 700;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #ff6b6b;
+    margin: 15px auto 0;
+    animation: width-pulse 3s infinite;
+}
+
+@keyframes width-pulse {
+    0%, 100% { width: 80px; }
+    50% { width: 120px; }
+}
+
+.couple-bio-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.couple-bio-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.couple-bio-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #495057;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 20px;
+    transition: all 0.3s ease;
+}
+
+.couple-bio-text p:hover {
+    transform: translateX(5px);
+}
+
+.couple-bio-text p::before {
+    content: '❤️';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.couple-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    min-width: 300px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px) rotate(2deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff6b6b;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover .stat-icon {
+    transform: rotate(360deg);
+}
+
+.stat-text h3 {
+    font-size: 1.2rem;
+    margin: 0 0 5px;
+    font-weight: 600;
+}
+
+.stat-text p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.couple-tips-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.couple-tips-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, rgba(255, 107, 107, 0.05) 10%, transparent 10%);
+    background-size: 40px 40px;
+    animation: shift-dots 30s linear infinite;
+}
+
+@keyframes shift-dots {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
+
+.couple-tips-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.couple-tips-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.couple-tips-text p {
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.couple-tips-text p:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.couple-tips-text p:last-child {
+    margin-bottom: 0;
+}
+
+.couple-tips-text strong {
+    display: block;
+    color: #ff6b6b;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.couple-tips-image {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.couple-tips-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.couple-tips-image:hover img {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Microphone Back Button */
+.back-to-section {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.microphone-back {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 20px 10px 60px;
+    background-color: #ff6b6b;
+    color: #fff;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    text-decoration: none;
+}
+
+.microphone-back:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    color: #fff;
+}
+
+.microphone-back::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.mic-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    color: #ff6b6b;
+    font-size: 20px;
+    z-index: 2;
+}
+
+.microphone-back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 100%);
+    animation: sound-wave 2s infinite;
+}
+
+@keyframes sound-wave {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.mic-text {
+    z-index: 1;
+    position: relative;
+}
+
+.mic-soundwaves {
+    position: absolute;
+    top: 50%;
+    left: 35px;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.soundwave {
+    display: block;
+    width: 3px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+    margin: 0 2px;
+    animation: wave-jump 0.5s infinite alternate;
+}
+
+.soundwave-1 { animation-delay: 0.1s; }
+.soundwave-2 { animation-delay: 0.2s; height: 15px; }
+.soundwave-3 { animation-delay: 0.3s; height: 8px; }
+.soundwave-4 { animation-delay: 0.4s; height: 12px; }
+
+@keyframes wave-jump {
+    0% { height: 5px; }
+    100% { height: 15px; }
+}
+
+/* Recipe Cards - Additional Styling */
+.recipe-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.recipe-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.recipe-card:hover {
+    transform: scale(1.03) rotate(1deg);
+    z-index: 10;
+}
+
+.recipe-card-title {
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.recipe-card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ff6b6b;
+    transition: width 0.3s ease;
+}
+
+.recipe-card:hover .recipe-card-title::after {
+    width: 100%;
+}
+
+.recipe-admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-edit {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.heart-float {
+    position: absolute;
+    font-size: 16px;
+    color: rgba(255, 107, 107, 0.3);
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.heart-1 { font-size: 12px; animation-duration: 12s; }
+.heart-2 { font-size: 18px; animation-duration: 14s; }
+.heart-3 { font-size: 14px; animation-duration: 10s; }
+.heart-4 { font-size: 20px; animation-duration: 16s; }
+.heart-5 { font-size: 16px; animation-duration: 13s; }
+.heart-6 { font-size: 22px; animation-duration: 18s; }
+.heart-7 { font-size: 15px; animation-duration: 11s; }
+.heart-8 { font-size: 24px; animation-duration: 15s; }
+.heart-9 { font-size: 13px; animation-duration: 9s; }
+
+@media (max-width: 768px) {
+    .couple-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .couple-hero-images {
+        margin: 0 auto 30px;
+    }
+    
+    .chef-social-large {
+        justify-content: center;
+    }
+    
+    .couple-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .couple-tips-image {
+        margin: 0 auto;
+    }
+}
+.back-to-section {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.mic-back-link {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.mic-back-link:hover {
+    transform: translateY(-5px);
+}
+
+.mic-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.mic-head {
+    width: 70px;
+    height: 90px;
+    background-color: #555;
+    border-radius: 45px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 3px solid #777;
+}
+
+.mic-grill {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    background: repeating-linear-gradient(
+        90deg,
+        #333,
+        #333 2px,
+        #444 2px,
+        #444 4px
+    );
+    border-radius: 25px;
+}
+
+.mic-handle {
+    width: 15px;
+    height: 40px;
+    background-color: #777;
+    margin-top: -2px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: -1;
+}
+
+.mic-base {
+    width: 50px;
+    height: 15px;
+    background-color: #ff6b6b;
+    border-radius: 5px;
+    position: relative;
+    z-index: -1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sound-waves {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.wave {
+    width: 4px;
+    height: 20px;
+    background-color: #ff6b6b;
+    margin: 0 3px;
+    border-radius: 5px;
+    animation: wave-animation 0.8s infinite ease-in-out;
+}
+
+.wave-1 {
+    animation-delay: 0s;
+    height: 15px;
+}
+
+.wave-2 {
+    animation-delay: 0.2s;
+    height: 25px;
+}
+
+.wave-3 {
+    animation-delay: 0.4s;
+    height: 20px;
+}
+
+@keyframes wave-animation {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1.5);
+    }
+}
+
+/* Back to Chefs Text */
+.mic-text {
+    position: absolute;
+    top: 50%;
+    right: -160px;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: 600;
+    font-size: 1.2rem;
+    background-color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mic-back-link:hover .mic-text {
+    background-color: #ff6b6b;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+
+.mic-head:before {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}

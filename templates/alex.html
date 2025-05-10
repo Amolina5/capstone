@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Chef Alex Molina - Home-Style Cooking{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/alex.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="chef-profile">
+                <div class="chef-header">
+                    <div class="chef-image-container">
+                        <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="chef-image">
+                    </div>
+                    <div class="chef-info">
+                        <h1 class="chef-name">Alex Molina</h1>
+                        <p class="chef-specialty">Home-Style Cooking</p>
+                        <div class="chef-social">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chef-section" id="journey">
+                    <h2>My Culinary Journey</h2>
+                    <div class="chef-content">
+                        <p>Growing up in a household where money was tight taught me one of life's most valuable lessons: you don't need expensive restaurant meals to enjoy extraordinary food. In our home, financial constraints never limited the flavors that came from our kitchen. My family turned necessity into an art form, creating dishes that would have everyone in the neighborhood talking.</p>
+                        
+                        <p>These early experiences shaped my understanding of food as more than just sustenance—it was our way of showing love, creativity, and pride despite our circumstances. The aromas that filled our modest home carried stories of heritage, resourcefulness, and community that no upscale restaurant could replicate.</p>
+                    </div>
+                </div>
+                
+                <div class="chef-section" id="inspiration">
+                    <h2>Inspiration Behind My Cooking</h2>
+                    <div class="chef-content">
+                        <p>The magic that happened in our kitchen inspired me to develop my own culinary skills. I was captivated by how simple ingredients, when treated with care and knowledge, could transform into something that brought people together and created lasting memories.</p>
+                        
+                        <p>What began as economic necessity evolved into a passionate pursuit of flavors and techniques. I learned that truly exceptional food isn't about expensive ingredients or fancy equipment—it's about understanding flavors, respecting traditions, and adding your own personal touch.</p>
+                    </div>
+                </div>
+                
+                
+                <div class="chef-section" id="signature-dishes">
+                    <h2>Signature Dishes</h2>
+                    <div class="chef-content">
+                        <div class="dish-list">
+                            <div class="dish-item" id="dish-ceviche">
+                                <div class="dish-image-placeholder"></div>
+                                <h3>Fresh Ceviche</h3>
+                                <p>A vibrant celebration of seafood transformed by citrus, combining delicate textures with bold flavors.</p>
+                                <span class="dish-details-btn">View Details</span>
+                                <div class="dish-details">
+                                    <p>My ceviche combines fresh white fish, shrimp, lime juice, cilantro, and a hint of jalapeño for a bright, refreshing starter.</p>
+                                </div>
+                            </div>
+                            <div class="dish-item" id="dish-ribeye">
+                                <div class="dish-image-placeholder"></div>
+                                <h3>Bone-in Ribeye with Mushroom Sauce</h3>
+                                <p>A rustic yet sophisticated dish that honors the beauty of perfectly cooked beef enhanced by earthy mushrooms.</p>
+                                <span class="dish-details-btn">View Details</span>
+                                <div class="dish-details">
+                                    <p>This dish features a perfectly seared ribeye steak with a rich sauce of wild mushrooms, herbs, and a touch of cream.</p>
+                                </div>
+                            </div>
+                            <div class="dish-item" id="dish-soup">
+                                <div class="dish-image-placeholder"></div>
+                                <h3>Coconut Thai Soup</h3>
+                                <p>A harmonious blend of aromatic herbs, creamy coconut, and perfectly balanced spices that transport you to Southeast Asia.</p>
+                                <span class="dish-details-btn">View Details</span>
+                                <div class="dish-details">
+                                    <p>My version of Tom Kha Gai uses lemongrass, galangal, coconut milk, and tender chicken for a comforting bowl of warmth.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+                <div class="chef-section" id="philosophy">
+                    <h2>Cooking Philosophy</h2>
+                    <div class="chef-content philosophy-content">
+                        <div class="philosophy-image"></div>
+                        <div class="philosophy-text">
+                            <p>I believe that cooking is an act of generosity and connection. When we prepare food with intention and care, we're offering more than just a meal—we're creating an experience that nourishes both body and spirit.</p>
+                            
+                            <p>Every dish tells a story, and I'm passionate about sharing mine through the food I create. Whether I'm preparing a family recipe passed down through generations or experimenting with new techniques, my goal remains the same: to create memorable food that brings people together.</p>
+                        </div>
+                    </div>
+                </div>
+                
+              
+                <div class="chef-section" id="stats">
+                    <h2>Recipe Collection</h2>
+                    <div class="chef-content">
+                        <div class="stats-container">
+                            <div class="stat-item" id="stat-total">
+                                <span class="stat-number">32</span>
+                                <span class="stat-label">Total Recipes</span>
+                            </div>
+                            <div class="stat-item" id="stat-category">
+                                <span class="stat-number">Home-Style</span>
+                                <span class="stat-label">Top Category</span>
+                            </div>
+                            <div class="stat-item" id="stat-featured">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Featured Recipes</span>
+                            </div>
+                        </div>
+                        <div class="view-all-recipes">
+                            <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">View All Recipes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="campfire-back-button">
+    <a href="{% url 'chefs' %}" aria-label="Back to Chefs Page">
+        <div class="campfire">
+            <div class="logs"></div>
+            <div class="flames">
+                <div class="flame"></div>
+                <div class="flame"></div>
+                <div class="flame"></div>
+                <div class="flame"></div>
+                <div class="flame"></div>
+            </div>
+            <div class="sparks">
+                <div class="spark"></div>
+                <div class="spark"></div>
+                <div class="spark"></div>
+                <div class="spark"></div>
+            </div>
+        </div>
+        <span class="back-text">Back to Chefs</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const detailButtons = document.querySelectorAll('.dish-details-btn');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const details = this.nextElementSibling;
+                if (details.style.maxHeight) {
+                    details.style.maxHeight = null;
+                    this.textContent = 'View Details';
+                } else {
+                    details.style.maxHeight = details.scrollHeight + 'px';
+                    this.textContent = 'Hide Details';
+                }
+            });
+        });
+        
+       
+        const statItems = document.querySelectorAll('.stat-item');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statItems.forEach(item => {
+            statObserver.observe(item);
+        });
+        
+        
+        const flames = document.querySelectorAll('.flame');
+        flames.forEach(flame => {
+            setInterval(() => {
+                const randomHeight = 20 + Math.random() * 10;
+                flame.style.height = randomHeight + 'px';
+            }, 100 + Math.random() * 200);
+        });
+        
+       
+        const sparks = document.querySelectorAll('.spark');
+        sparks.forEach(spark => {
+            setInterval(() => {
+                spark.style.top = -5 - Math.random() * 15 + 'px';
+                spark.style.left = 30 + Math.random() * 40 + '%';
+                spark.style.opacity = Math.random();
+            }, 300 + Math.random() * 700);
+        });
+    });
+</script>
+{% endblock %}

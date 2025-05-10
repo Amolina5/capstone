@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}All Recipes | Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/recipes.css">
+{% endblock %}
+
+{% block content %}
+<section class="recipes-header">
+    <div class="container">
+        <h1 class="page-title">Our Recipe Collection</h1>
+        <p class="page-subtitle">Discover delicious recipes created by our talented chefs</p>
+    </div>
+</section>
+
+<section class="recipes-filter">
+    <div class="container">
+        <div class="filter-wrapper">
+            <form method="get" action="{% url 'all_recipes' %}" class="filter-form">
+                <div class="form-group">
+                    <label for="category">Filter by Category</label>
+                    <select name="category" id="category" class="form-control">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Apply Filter</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Chef-specific recipe sections -->
+<section class="chef-recipes-container">
+    <div class="container">
+        {% for chef in chefs %}
+            <div class="chef-section">
+                <div class="chef-section-header">
+                    {% if chef.image %}
+                        <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-avatar">
+                    {% else %}
+                        <div class="chef-avatar-placeholder">
+                            <i class="fas fa-user-chef"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="chef-info">
+                        <h2 class="chef-name">{{ chef.name }}</h2>
+                        <p class="chef-specialty">{{ chef.specialty }}</p>
+                    </div>
+                    
+                    {% if chef.slug == 'cameron-quinn' %}
+                        <a href="{% url 'chef_cameron' %}" class="btn btn-outline btn-sm">View Profile</a>
+                    {% elif chef.slug == 'alex-molina' %}
+                        <a href="{% url 'chef_alex' %}" class="btn btn-outline btn-sm">View Profile</a>
+                    {% elif chef.slug == 'wade-alexandander' %}
+                        <a href="{% url 'chef_wade' %}" class="btn btn-outline btn-sm">View Profile</a>
+                    {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                        <a href="{% url 'chef_couple' %}" class="btn btn-outline btn-sm">View Profile</a>
+                    {% elif chef.slug == 'amanda-molina' %}
+                        <a href="{% url 'chef_amanda' %}" class="btn btn-outline btn-sm">View Profile</a>
+                    {% else %}
+                        <a href="#" class="btn btn-outline btn-sm disabled">View Profile</a>
+                    {% endif %}
+                </div>
+                
+                {% if chef.recipes %}
+                    <div class="section-header">
+                        <h3 class="section-title">{{ chef.name }}'s Recipes</h3>
+                        <span class="chef-recipes-count">{{ chef.recipe_count }} recipes</span>
+                    </div>
+                    
+                    <div class="recipe-row">
+                        {% for recipe in chef.recipes %}
+                            <div class="recipe-card">
+                                <div class="recipe-image-container">
+                                    {% if recipe.image %}
+                                        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                    {% else %}
+                                        <div class="recipe-card-placeholder">
+                                            <i class="fas fa-utensils"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="recipe-card-body">
+                                    <span class="category-badge">{{ recipe.category.name }}</span>
+                                    <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                                    <p class="recipe-card-desc">{{ recipe.description|truncatechars:80 }}</p>
+                                    <div class="recipe-meta">
+                                        <span><i class="far fa-clock"></i> {{ recipe.total_time }} min</span>
+                                        <span><i class="fas fa-utensils"></i> {{ recipe.difficulty|title }}</span>
+                                    </div>
+                                    <a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if chef.recipe_count > 5 %}
+                        {% if chef.slug == 'cameron-quinn' %}
+                            <a href="{% url 'chef_cameron' %}" class="view-all-link">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% elif chef.slug == 'alex-molina' %}
+                            <a href="{% url 'chef_alex' %}" class="view-all-link">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% elif chef.slug == 'wade-alexandander' %}
+                            <a href="{% url 'chef_wade' %}" class="view-all-link">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                            <a href="{% url 'chef_couple' %}" class="view-all-link">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% elif chef.slug == 'amanda-molina' %}
+                            <a href="{% url 'chef_amanda' %}" class="view-all-link">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% else %}
+                            <a href="#" class="view-all-link disabled">View all recipes from {{ chef.name }} <i class="fas fa-arrow-right"></i></a>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <div class="chef-empty-state">
+                        <p>{{ chef.name }} hasn't posted any recipes yet. Check back soon!</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <div class="no-chefs-message">
+                <p>No chefs available yet. Check back soon!</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Enhance scrolling behavior for recipe rows
+    const recipeRows = document.querySelectorAll('.recipe-row');
+    
+    recipeRows.forEach(row => {
+        // Add horizontal scroll with mouse wheel
+        row.addEventListener('wheel', function(e) {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                this.scrollLeft += e.deltaY;
+            }
+        });
+        
+        // Add arrow navigation for recipe rows
+        const cards = row.querySelectorAll('.recipe-card');
+        if (cards.length > 3) {  // Only add navigation if there are enough cards
+            const leftArrow = document.createElement('button');
+            leftArrow.className = 'scroll-arrow scroll-left';
+            leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            leftArrow.addEventListener('click', () => {
+                row.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            const rightArrow = document.createElement('button');
+            rightArrow.className = 'scroll-arrow scroll-right';
+            rightArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            rightArrow.addEventListener('click', () => {
+                row.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            row.parentElement.insertBefore(leftArrow, row);
+            row.parentElement.appendChild(rightArrow);
+        }
+    });
+    
+    // MODIFIED: Make chef sections visible immediately without animations
+    const chefSections = document.querySelectorAll('.chef-section');
+    chefSections.forEach(section => {
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+    });
+  });
+</script>
+{% endblock %}

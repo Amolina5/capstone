@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cookbook - Discover, create, and share your favorite recipes with our community">
+    <title>{% block title %}Cookbook{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/static/img/favicon.png" type="image/png">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/header-footer.css">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    
+    <a href="#main-content" class="skip-link visually-hidden">Skip to main content</a>
+    
+    
+    <header class="site-header">
+        <div class="container">
+            <div class="header-wrapper">
+                
+                <div class="logo">
+                    <a href="{% url 'home' %}" aria-label="Cookbook home page">
+                        <i class="fas fa-utensils" aria-hidden="true"></i>
+                        <span>Cookbook</span>
+                    </a>
+                </div>
+                
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-controls="main-nav">
+                    <span class="toggle-line"></span>
+                    <span class="toggle-line"></span>
+                    <span class="toggle-line"></span>
+                </button>
+                
+                
+                <nav id="main-nav" aria-label="Main navigation">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="{% url 'recipes:recipe_list' %}" class="nav-link">Recipes</a></li>
+                        <li class="nav-item"><a href="{% url 'chefs' %}" class="nav-link">Our Chefs</a></li>
+                        <li class="nav-item"><a href="{% url 'all_recipes' %}" class="nav-link">Recipes</a></li>
+                        
+                       
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">
+                                Categories <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="dropdown-item">Breakfast</a></li>
+                                <li><a href="#" class="dropdown-item">Lunch</a></li>
+                                <li><a href="#" class="dropdown-item">Dinner</a></li>
+                                <li><a href="#" class="dropdown-item">Desserts</a></li>
+                                <li><a href="#" class="dropdown-item">Vegetarian</a></li>
+                                <li><a href="#" class="dropdown-item">View All</a></li>
+                            </ul>
+                        </li>
+                        
+                        
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">
+                                <i class="fas fa-user-circle" aria-hidden="true"></i>
+                                <span>{{ user.username }}</span>
+                                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="dropdown-item"><i class="fas fa-book" aria-hidden="true"></i> My Recipes</a></li>
+                                <li><a href="#" class="dropdown-item"><i class="fas fa-bookmark" aria-hidden="true"></i> Saved Recipes</a></li>
+                                <li><a href="#" class="dropdown-item"><i class="fas fa-user" aria-hidden="true"></i> Profile</a></li>
+                                <li><a href="#" class="dropdown-item"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item auth-buttons">
+                            <a href="#" class="btn btn-outline">Login</a>
+                            <a href="#" class="btn btn-primary">Sign Up</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    
+    <main id="main-content" tabindex="-1">
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+   
+    <footer class="site-footer">
+       
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="newsletter-wrapper">
+                    <div class="newsletter-content">
+                        <h3>Subscribe to Our Newsletter</h3>
+                        <p>Get weekly recipe inspiration, cooking tips, and exclusive offers</p>
+                    </div>
+                    <form class="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+       
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <i class="fas fa-utensils" aria-hidden="true"></i>
+                            <span>Cookbook</span>
+                        </div>
+                        <p class="footer-tagline">Your place for delicious recipes.</p>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links-section">
+                        <div class="footer-links">
+                            <h4>Quick Links</h4>
+                            <ul>
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
+                                <li><a href="{% url 'chefs' %}">Our Chefs</a></li>
+                                <li><a href="#">Categories</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-links">
+                            <h4>Categories</h4>
+                            <ul>
+                                <li><a href="#">Breakfast</a></li>
+                                <li><a href="#">Lunch</a></li>
+                                <li><a href="#">Dinner</a></li>
+                                <li><a href="#">Desserts</a></li>
+                                <li><a href="#">Vegetarian</a></li>
+                                <li><a href="#">Vegan</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-links">
+                            <h4>Contact Us</h4>
+                            <address>
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                                        <a href="mailto:contact@cookbook.com">contact@cookbook.com</a>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-phone" aria-hidden="true"></i>
+                                        <a href="tel:+11234567890">(123) 456-7890</a>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                        <span>123 Recipe St, Food City</span>
+                                    </li>
+                                </ul>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; {% now "Y" %} Cookbook. All rights reserved.</p>
+                    <nav aria-label="Footer secondary navigation">
+                        <ul class="footer-bottom-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    {% block extra_js %}
+    <script>
+        
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('main-nav').classList.toggle('active');
+            
+            
+            const lines = this.querySelectorAll('.toggle-line');
+            if (this.classList.contains('active')) {
+                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            } else {
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            }
+        });
+        
+        
+        if (window.innerWidth <= 768) {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.closest('.dropdown').classList.toggle('active');
+                });
+            });
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

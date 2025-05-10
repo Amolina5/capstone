@@ -1,0 +1,386 @@
+/* General styling for the recipes page */
+.recipes-header {
+    background-color: #f8f9fa;
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.recipes-filter {
+    margin-bottom: 3rem;
+}
+
+.filter-wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.filter-form .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.filter-form select.form-control {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%23444' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.filter-form button {
+    padding: 0.7rem 1.5rem;
+    align-self: flex-end;
+}
+
+/* Chef section styling */
+.chef-section {
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.chef-section:last-child {
+    border-bottom: none;
+}
+
+.chef-section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.chef-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chef-avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: #aaa;
+    font-size: 1.5rem;
+}
+
+.chef-info {
+    flex: 1;
+}
+
+.chef-name {
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+    color: #333;
+}
+
+.chef-specialty {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #444;
+}
+
+.chef-recipes-count {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Recipe row styling */
+.recipe-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+
+.recipe-row::-webkit-scrollbar {
+    height: 6px;
+}
+
+.recipe-row::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+    border-radius: 3px;
+}
+
+.recipe-row::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Recipe card styling */
+.recipe-card {
+    flex: 0 0 300px;
+    max-width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    scroll-snap-align: start;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.recipe-image-container {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.recipe-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.recipe-card:hover .recipe-card-img {
+    transform: scale(1.05);
+}
+
+.recipe-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    color: #aaa;
+    font-size: 2rem;
+}
+
+.recipe-card-body {
+    padding: 1.25rem;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #f8f9fa;
+    color: #666;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+}
+
+.recipe-card-title {
+    font-size: 1.2rem;
+    margin: 0 0 0.75rem;
+    color: #333;
+    line-height: 1.3;
+}
+
+.recipe-card-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.recipe-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.recipe-meta i {
+    margin-right: 0.35rem;
+    color: #e67e22;
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e67e22;
+    border-radius: 5px;
+    color: #e67e22;
+    background: transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+/* Navigation arrows for recipe rows */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0.9;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.scroll-arrow:hover {
+    opacity: 1;
+    background-color: #fafafa;
+}
+
+.scroll-left {
+    left: -15px;
+}
+
+.scroll-right {
+    right: -15px;
+}
+
+/* View all link */
+.view-all-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    color: #e67e22;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.view-all-link:hover {
+    color: #d35400;
+    text-decoration: underline;
+}
+
+.view-all-link i {
+    font-size: 0.8rem;
+    margin-left: 0.35rem;
+    transition: transform 0.2s;
+}
+
+.view-all-link:hover i {
+    transform: translateX(3px);
+}
+
+/* Empty states */
+.chef-empty-state {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.chef-empty-state p {
+    margin: 0;
+    color: #777;
+}
+
+.no-chefs-message {
+    text-align: center;
+    padding: 3rem 0;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chef-section-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .chef-avatar, .chef-avatar-placeholder {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .chef-info {
+        margin-bottom: 1rem;
+    }
+    
+    .recipe-card {
+        flex: 0 0 250px;
+        max-width: 250px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .filter-form {
+        flex-direction: column;
+    }
+    
+    .filter-form .form-group {
+        width: 100%;
+    }
+}

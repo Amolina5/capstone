@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% block title %}Nathan & Jade - Couples Cooking{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/chefs.css">
+<link rel="stylesheet" href="/static/css/nate.css">
+{% endblock %}
+
+{% block content %}
+<section class="couple-hero">
+    <div class="container">
+        <div class="couple-hero-content">
+            <div class="couple-hero-images">
+                <img src="/static/img/chefs/nathan.jpg" alt="Chef Nathan" class="chef-image nathan-img">
+                <img src="/static/img/chefs/jade.jpg" alt="Chef Jade" class="chef-image jade-img">
+                <div class="heart-overlay">
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+            <div class="couple-hero-text">
+                <h1>Nathan & Jade</h1>
+                <p class="chef-specialty">Couples Cooking</p>
+                <p class="chef-bio-extended">Culinary power couple specializing in date night recipes and collaborative cooking techniques that bring couples together in the kitchen.</p>
+                <div class="chef-social-large">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                {% if user.username == 'nathan' or user.username == 'jade' %}
+                <div class="chef-actions">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="couple-bio-section">
+    <div class="container">
+        <h2 class="section-title">Our Culinary Story</h2>
+        <div class="couple-bio-content">
+            <div class="couple-bio-text">
+                <p>We met in culinary school over a disastrous soufflé experiment that somehow ended in a coffee date. Six years later, we're still cooking together, finishing each other's recipes, and building our life around our shared passion for food.</p>
+                
+                <p>Nathan brings precision and technique from his training in classical French cuisine, while Jade contributes creativity and bold flavors from her background in fusion cooking. Together, we've developed a unique approach to couples cooking that celebrates collaboration in the kitchen.</p>
+                
+                <p>Our philosophy is simple: cooking together strengthens relationships. We've designed our recipes to be prepared by two people, with steps that encourage communication, cooperation, and fun. From quick weeknight dinners to elaborate weekend projects, our dishes are meant to be shared experiences from preparation to the final bite.</p>
+                
+                <p>When we're not in the kitchen, we're traveling the world in search of new flavors and techniques to bring back to our home and share with our community. We believe that food is a universal language of love, and we're passionate about helping other couples discover the joy of cooking together.</p>
+            </div>
+            
+            <div class="couple-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>{{ recipe_count|default:"25" }} Recipes</h3>
+                        <p>Shared on Cookbook</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>6 Years</h3>
+                        <p>Cooking Together</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>12 Countries</h3>
+                        <p>Culinary Inspiration</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>Cookbook Coming Soon</h3>
+                        <p>"Two in the Kitchen"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="couple-tips-section">
+    <div class="container">
+        <h2 class="section-title">Our Approach to Cooking Together</h2>
+        <div class="couple-tips-content">
+            <div class="couple-tips-text">
+                <p>
+                    <strong>Divide and Conquer</strong>
+                    "The key to successful couples cooking is playing to each person's strengths. Nathan handles the protein and sauces, while Jade takes on vegetables and plating. This division creates a natural flow in the kitchen."
+                </p>
+                
+                <p>
+                    <strong>Create Shared Rituals</strong>
+                    "Our Sunday meal prep has become a cherished ritual. We put on music, open a bottle of wine, and spend the afternoon cooking together, catching up on our week and planning for the days ahead."
+                </p>
+                
+                <p>
+                    <strong>Embrace Kitchen Mishaps</strong>
+                    "Some of our best dishes were born from mistakes! When cooking together, view unexpected outcomes as opportunities for creativity and humor rather than failures."
+                </p>
+            </div>
+            
+            <div class="couple-tips-image">
+                <img src="/static/img/chefs/nathan-jade-cooking.jpg" alt="Nathan and Jade cooking together">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="chef-recipes-section">
+    <div class="container">
+        <h2 class="section-title">Nathan & Jade's Recipes</h2>
+        
+        {% if recipes %}
+            {% if user.username == 'nathan' or user.username == 'jade' %}
+            <div class="recipe-management">
+                <div class="management-tools">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-sort"></i> Manage Recipes
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="recipes-grid">
+                {% for recipe in recipes %}
+                    <div class="recipe-card">
+                        <div class="recipe-image-container">
+                            {% if recipe.image %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                            {% else %}
+                                <div class="recipe-card-placeholder">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="recipe-card-body">
+                            <span class="category-badge">{{ recipe.category.name }}</span>
+                            <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                            <p class="recipe-card-desc">{{ recipe.description|truncatechars:100 }}</p>
+                            <div class="recipe-meta">
+                                <span><i class="far fa-clock"></i> {{ recipe.total_time }} min</span>
+                                <span><i class="fas fa-utensils"></i> {{ recipe.difficulty|title }}</span>
+                                <span><i class="fas fa-users"></i> For Two</span>
+                            </div>
+                            <div class="recipe-actions">
+                                <a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                                
+                                {% if user.username == 'nathan' or user.username == 'jade' %}
+                                <div class="recipe-admin-actions">
+                                    <a href="{% url 'recipes:recipe_edit' slug=recipe.slug %}" class="btn btn-sm btn-edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{% url 'recipes:recipe_delete' slug=recipe.slug %}" class="btn btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-recipes-message">
+                <p>No recipes available yet. {% if user.username == 'nathan' or user.username == 'jade' %}Why not add your first recipe together?{% else %}Check back soon!{% endif %}</p>
+                
+                {% if user.username == 'nathan' or user.username == 'jade' %}
+                <div class="empty-state-action">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add Your First Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+<section class="back-to-section">
+    <div class="container">
+        <a href="{% url 'chefs' %}" class="mic-back-link">
+            <div class="mic-button">
+                <div class="mic-head">
+                    <div class="mic-grill"></div>
+                </div>
+                <div class="mic-handle"></div>
+                <div class="mic-base"></div>
+                <div class="sound-waves">
+                    <div class="wave wave-1"></div>
+                    <div class="wave wave-2"></div>
+                    <div class="wave wave-3"></div>
+                </div>
+                <span class="mic-text">Back to Chefs</span>
+            </div>
+        </a>
+    </div>
+</section>
+<div class="floating-hearts">
+    {% for i in '123456789'|make_list %}
+    <div class="heart-float heart-{{ forloop.counter }}">
+        <i class="fas fa-heart"></i>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation for recipe cards on scroll
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        recipeCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Animate floating hearts
+        const hearts = document.querySelectorAll('.heart-float');
+        hearts.forEach(heart => {
+            // Set random starting positions
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            
+            // Set random animation duration
+            const duration = 5 + Math.random() * 10;
+            heart.style.animationDuration = duration + 's';
+            
+            // Set random delay
+            const delay = Math.random() * 5;
+            heart.style.animationDelay = delay + 's';
+        });
+    });
+</script>
+{% endblock %}

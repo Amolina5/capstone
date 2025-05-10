@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}Amanda's Family Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/chefs.css">
+<link rel="stylesheet" href="/static/css/amanda.css">
+{% endblock %}
+
+{% block content %}
+<section class="family-cookbook-hero">
+    <div class="container">
+        <div class="cookbook-hero-content">
+            <div class="cookbook-image">
+                <img src="/static/img/chefs/amanda.jpg" alt="Amanda" class="chef-image">
+                <div class="photo-frame-effect"></div>
+            </div>
+            <div class="cookbook-hero-text">
+                <h1>Amanda's Family Cookbook</h1>
+                <p class="cookbook-subtitle">Preserving Generations of Family Recipes</p>
+                <p class="cookbook-bio">Creating a collection of cherished family recipes to pass down to my children, inspired by the cooking traditions my grandmother shared with me.</p>
+                <div class="cookbook-social">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+                
+                {% if user.username == 'amanda' %}
+                <div class="cookbook-actions">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Story Section -->
+<section class="cookbook-story-section">
+    <div class="container">
+        <h2 class="section-title">Our Family's Culinary Journey</h2>
+        <div class="cookbook-story-content">
+            <div class="cookbook-story-text">
+                <p>My grandmother's kitchen was the heart of our family. Every holiday, birthday, and Sunday dinner, we'd gather around her table to share not just a meal, but stories, laughter, and traditions. Her recipes weren't just instructions – they were family history, passed down through generations and adapted along the way.</p>
+                
+                <p>When my grandmother passed away, I realized that many of her recipes existed only in her memory. The few handwritten recipe cards I found became my most treasured possessions, but so many special dishes were lost forever – her perfect pie crust, her secret-ingredient meatballs, her holiday stuffing that nobody could quite recreate.</p>
+                
+                <p>This digital cookbook is my way of preserving our family's culinary heritage for my children and future generations. I'm collecting recipes from all branches of our family tree, documenting the special dishes that mark our celebrations, and recording the everyday meals that bring us comfort.</p>
+                
+                <p>Each recipe comes with a story – who created it, when we serve it, and what makes it special to our family. My hope is that my children will not only learn to cook these dishes but will understand the love and history behind each one.</p>
+            </div>
+            
+            <div class="cookbook-photos">
+                <div class="photo-grid">
+                    <div class="photo-item">
+                        <img src="/static/img/cookbook/grandma-cooking.jpg" alt="Grandmother cooking">
+                        <p class="photo-caption">Grandma Jean, Christmas 1978</p>
+                    </div>
+                    <div class="photo-item">
+                        <img src="/static/img/cookbook/family-dinner.jpg" alt="Family dinner">
+                        <p class="photo-caption">Sunday dinner tradition</p>
+                    </div>
+                    <div class="photo-item">
+                        <img src="/static/img/cookbook/recipe-card.jpg" alt="Handwritten recipe card">
+                        <p class="photo-caption">Original apple pie recipe</p>
+                    </div>
+                    <div class="photo-item">
+                        <img src="/static/img/cookbook/kitchen-kids.jpg" alt="Kids in the kitchen">
+                        <p class="photo-caption">Teaching the next generation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="treasured-recipes-section">
+    <div class="container">
+        <h2 class="section-title">Treasured Family Recipes</h2>
+        <div class="treasured-recipes-intro">
+            <p>These special recipes have been in our family for generations, each one carrying memories of family gatherings and celebrations. I'm documenting them here to preserve our traditions and pass them on to my children.</p>
+        </div>
+        
+        <div class="recipe-categories">
+            <div class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-birthday-cake"></i>
+                </div>
+                <h3>Celebration Desserts</h3>
+                <p>Special treats for birthdays, holidays, and milestones</p>
+            </div>
+            
+            <div class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-drumstick-bite"></i>
+                </div>
+                <h3>Sunday Dinners</h3>
+                <p>Hearty main courses that bring the family together</p>
+            </div>
+            
+            <div class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-cookie"></i>
+                </div>
+                <h3>Holiday Cookies</h3>
+                <p>Traditional cookies we bake every holiday season</p>
+            </div>
+            
+            <div class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-carrot"></i>
+                </div>
+                <h3>Side Dishes</h3>
+                <p>From garden vegetables to hearty casseroles</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="chef-recipes-section">
+    <div class="container">
+        <h2 class="section-title">Our Family Recipes</h2>
+        
+        {% if recipes %}
+            {% if user.username == 'amanda' %}
+            <div class="recipe-management">
+                <div class="management-tools">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-sort"></i> Manage Recipes
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="recipes-grid">
+                {% for recipe in recipes %}
+                    <div class="recipe-card family-recipe-card">
+                        <div class="recipe-image-container">
+                            {% if recipe.image %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                            {% else %}
+                                <div class="recipe-card-placeholder">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% endif %}
+                            <div class="recipe-card-frame"></div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <span class="category-badge">{{ recipe.category.name }}</span>
+                            <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                            <p class="recipe-card-desc">{{ recipe.description|truncatechars:100 }}</p>
+                            <div class="recipe-meta">
+                                <span><i class="far fa-clock"></i> {{ recipe.total_time }} min</span>
+                                <span><i class="fas fa-utensils"></i> {{ recipe.difficulty|title }}</span>
+                                <span><i class="fas fa-heart"></i> Family Favorite</span>
+                            </div>
+                            <div class="recipe-actions">
+                                <a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                                
+                                {% if user.username == 'amanda' %}
+                                <div class="recipe-admin-actions">
+                                    <a href="{% url 'recipes:recipe_edit' slug=recipe.slug %}" class="btn btn-sm btn-edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{% url 'recipes:recipe_delete' slug=recipe.slug %}" class="btn btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-recipes-message">
+                <p>No recipes have been added yet. {% if user.username == 'amanda' %}Start building your family cookbook by adding your first recipe.{% else %}Check back soon!{% endif %}</p>
+                
+                {% if user.username == 'amanda' %}
+                <div class="empty-state-action">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add Your First Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="back-to-section">
+    <div class="container">
+        <a href="{% url 'chefs' %}" class="cookbook-back-link">
+            <div class="cookbook-button">
+                <div class="cookbook-cover">
+                    <div class="cookbook-pages"></div>
+                    <div class="cookbook-spine"></div>
+                    <div class="cookbook-front">
+                        <div class="cookbook-title">Back to Chefs</div>
+                        <div class="cookbook-decor"></div>
+                    </div>
+                </div>
+                <span class="cookbook-text">Return to Chef List</span>
+            </div>
+        </a>
+    </div>
+</section>
+
+<div class="floating-recipe-cards">
+    {% for i in '12345'|make_list %}
+    <div class="floating-card floating-card-{{ forloop.counter }}">
+        <div class="card-content"></div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        recipeCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        const photoItems = document.querySelectorAll('.photo-item');
+        photoItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.classList.add('photo-hover');
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.classList.remove('photo-hover');
+            });
+        });
+        
+        const floatingCards = document.querySelectorAll('.floating-card');
+        floatingCards.forEach(card => {
+
+            card.style.left = Math.random() * 100 + '%';
+            card.style.top = Math.random() * 100 + '%';
+            
+            const duration = 20 + Math.random() * 20;
+            card.style.animationDuration = duration + 's';
+            
+            const delay = Math.random() * 10;
+            card.style.animationDelay = delay + 's';
+            
+            const rotation = -10 + Math.random() * 20;
+            card.style.transform = `rotate(${rotation}deg)`;
+        });
+    });
+</script>
+{% endblock %}

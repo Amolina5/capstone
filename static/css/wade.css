@@ -1,0 +1,759 @@
+/* wade.css - Bar Food & Beer Theme */
+
+/* Base Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #2D2D2D;
+    background-color: #F5F5F5;
+    background-image: url('/static/img/dark-wood-bg.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.container {
+    padding: 40px 15px;
+}
+
+/* Chef Header */
+.chef-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    padding: 30px;
+    background-color: #1A1A1A;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 2px solid #B85C38;
+    position: relative;
+    overflow: hidden;
+}
+
+.chef-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/img/beer-bubbles.png');
+    opacity: 0.05;
+    animation: bubbleRise 30s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes bubbleRise {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% -200px; }
+}
+
+.chef-image-container {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #C69C6D;
+    box-shadow: 0 0 20px rgba(198, 156, 109, 0.4);
+    margin-right: 30px;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.chef-image-container:hover {
+    transform: scale(1.05);
+}
+
+.chef-image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(198, 156, 109, 0.2), transparent 70%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.chef-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.1) saturate(1.1);
+}
+
+.chef-info {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.chef-name {
+    font-size: 2.8rem;
+    margin: 0 0 12px;
+    color: #F5F5F5;
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.chef-specialty {
+    font-size: 1.3rem;
+    margin: 0 0 15px;
+    color: #C69C6D;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.chef-social {
+    display: flex;
+    gap: 25px;
+}
+
+.chef-social a {
+    color: #F5F5F5;
+    font-size: 1.4rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.chef-social a:hover {
+    color: #C69C6D;
+    transform: scale(1.2) rotate(5deg);
+}
+
+.chef-section {
+    margin-bottom: 70px;
+    background-color: #1A1A1A;
+    border-radius: 8px;
+    padding: 35px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-left: 6px solid #C69C6D;
+    transition: transform 0.3s ease;
+    position: relative;
+    color: #F5F5F5;
+}
+
+.chef-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/img/beer-texture.png');
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.chef-section:hover {
+    transform: translateY(-5px);
+}
+
+.chef-section::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    right: 20px;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    filter: blur(5px);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.chef-section h2 {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    color: #C69C6D;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.chef-section h2::after {
+    content: "🍺";
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    font-size: 1.5rem;
+}
+
+.chef-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #F5F5F5;
+    position: relative;
+    z-index: 1;
+}
+
+.chef-content p {
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.dish-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.dish-item {
+    background-color: #272727;
+    background-image: url('/static/img/pub-texture.jpg');
+    background-blend-mode: overlay;
+    background-size: cover;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #C69C6D;
+}
+
+.dish-item:hover {
+    transform: translateY(-10px) rotate(1deg);
+}
+
+.dish-item::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    right: 20px;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    filter: blur(5px);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.dish-image-placeholder {
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dish-image-placeholder::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    z-index: 1;
+}
+
+#dish-fries .dish-image-placeholder {
+    background: url('/static/img/placeholder-fries.jpg') center/cover;
+}
+
+#dish-burger .dish-image-placeholder {
+    background: url('/static/img/placeholder-burger.jpg') center/cover;
+}
+
+#dish-mac .dish-image-placeholder {
+    background: url('/static/img/placeholder-mac.jpg') center/cover;
+}
+
+.dish-item h3 {
+    font-size: 1.5rem;
+    margin: 0 0 15px;
+    color: #C69C6D;
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.dish-item h3::before {
+    content: "✦";
+    position: absolute;
+    left: -15px;
+    color: #C69C6D;
+    opacity: 0.7;
+}
+
+.dish-item p {
+    margin-bottom: 20px;
+    color: #F5F5F5;
+}
+
+.dish-details-btn {
+    display: inline-block;
+    background-color: #C69C6D;
+    color: #1A1A1A;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.dish-details-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.dish-details-btn:hover {
+    background-color: #D8B88E;
+    transform: translateY(-3px);
+}
+
+.dish-details-btn:hover::before {
+    left: 100%;
+}
+
+.dish-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    margin-top: 15px;
+    padding: 0 10px;
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 5px;
+    border-left: 3px solid #C69C6D;
+}
+
+.philosophy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.philosophy-image {
+    height: 280px;
+    background: url('/static/img/pub-kitchen.jpg') center/cover;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.philosophy-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+    z-index: 1;
+}
+
+/* Stats Section */
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.stat-item {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    padding: 35px 20px;
+    background-color: #272727;
+    background-image: url('/static/img/beer-foam.png');
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-size: contain;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 2px solid #444;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.stat-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stat-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75%;
+    background: linear-gradient(to bottom, #C69C6D10, transparent);
+    pointer-events: none;
+}
+
+#stat-total {
+    transition-delay: 0.1s;
+}
+
+#stat-category {
+    transition-delay: 0.3s;
+}
+
+#stat-featured {
+    transition-delay: 0.5s;
+}
+
+.stat-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.stat-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #C69C6D;
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.stat-number::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 3px;
+    background-color: #C69C6D;
+    margin: 10px auto;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #F5F5F5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.view-all-recipes {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 35px;
+    background-color: #C69C6D;
+    color: #1A1A1A;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn:hover {
+    background-color: #D8B88E;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background-color: #C69C6D;
+    color: #1A1A1A;
+}
+
+.btn-primary:hover {
+    background-color: #D8B88E;
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    border: 2px solid #F5F5F5;
+    color: #F5F5F5;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #444;
+    border-color: #444;
+    color: #F5F5F5;
+}
+
+.beer-back-button {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.beer-back-button:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+.beer-back-button a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.beer-glass {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.glass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.beer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    background: linear-gradient(to bottom, #D8B88E, #C69C6D);
+    border-radius: 0 0 7px 7px;
+    animation: pour 2s ease-out;
+    transform-origin: center bottom;
+}
+
+@keyframes pour {
+    0% { height: 0; }
+    100% { height: 75%; }
+}
+
+.foam {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+    z-index: 2;
+}
+
+.foam::before, .foam::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 25px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.foam::before {
+    left: 15px;
+}
+
+.foam::after {
+    right: 15px;
+}
+
+.bubbles {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.bubble {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: rise linear infinite;
+    opacity: 0;
+}
+
+.bubble:nth-child(1) {
+    width: 6px;
+    height: 6px;
+    left: 20%;
+    animation-duration: 2s;
+    animation-delay: 0.2s;
+}
+
+.bubble:nth-child(2) {
+    width: 4px;
+    height: 4px;
+    left: 40%;
+    animation-duration: 2.2s;
+    animation-delay: 0.4s;
+}
+
+.bubble:nth-child(3) {
+    width: 8px;
+    height: 8px;
+    left: 60%;
+    animation-duration: 1.8s;
+    animation-delay: 0.3s;
+}
+
+.bubble:nth-child(4) {
+    width: 5px;
+    height: 5px;
+    left: 80%;
+    animation-duration: 2.5s;
+    animation-delay: 0.1s;
+}
+
+@keyframes rise {
+    0% {
+        bottom: 0;
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+    }
+}
+
+.back-text {
+    margin-top: 10px;
+    color: #F5F5F5;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: rgba(198, 156, 109, 0.8);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease;
+}
+
+.beer-back-button:hover .back-text {
+    background-color: #D8B88E;
+}
+
+.chef-profile {
+    position: relative;
+}
+
+.chef-profile::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/img/beer-bubbles-overlay.png');
+    opacity: 0.03;
+    pointer-events: none;
+    animation: bubbleFloat 120s infinite linear;
+    z-index: -1;
+}
+
+@keyframes bubbleFloat {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+@media (max-width: 768px) {
+    .chef-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .chef-image-container {
+        margin-right: 0;
+        margin-bottom: 25px;
+    }
+    
+    .chef-social {
+        justify-content: center;
+    }
+    
+    .philosophy-content {
+        flex-direction: column;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+    }
+    
+    .stat-item {
+        width: 100%;
+    }
+
+    .beer-back-button {
+        bottom: 20px;
+    }
+    
+    .beer-glass {
+        width: 70px;
+        height: 90px;
+    }
+    
+    .back-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .philosophy-content {
+        flex-direction: row;
+    }
+    
+    .philosophy-image {
+        flex: 1;
+    }
+    
+    .philosophy-text {
+        flex: 1;
+        padding-left: 30px;
+    }
+}

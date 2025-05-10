@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}Chef Cameron Quinn | Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/chefs.css">
+<link rel="stylesheet" href="/static/css/cameron.css">
+{% endblock %}
+
+{% block content %}
+
+<section class="chef-hero">
+    <div class="container">
+        <div class="chef-hero-content">
+            <div class="chef-hero-image">
+                <img src="/static/img/cameron.jpg" alt="Chef Cameron Quinn" class="chef-image">
+            </div>
+            <div class="chef-hero-text">
+                <h1>Cameron Quinn</h1>
+                <p class="chef-specialty">Fine Dining Specialist</p>
+                <p class="chef-bio-extended">Three-Michelin-star chef specializing in elevated cuisine with a focus on locally-sourced ingredients and artistic presentation.</p>
+                <div class="chef-social-large">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                
+                {% if user.username == 'cameron' %}
+                <div class="chef-actions">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="chef-bio-section">
+    <div class="container">
+        <h2 class="section-title">About Chef Cameron</h2>
+        <div class="chef-bio-content">
+            <div class="chef-bio-text">
+                <p>Cameron Quinn is one of the world's most celebrated culinary artists, renowned for his meticulous attention to detail and innovative approach to fine dining. With three Michelin stars to his name, Chef Quinn has established himself as a pioneer in the culinary world.</p>
+                
+                <p>Born and raised in St. Louis, Missouri, Cameron developed a deep passion for cooking at a young age. His culinary journey began in his family kitchen, where he first discovered the joy of creating dishes that brought people together.</p>
+                
+                <p>After honing his skills at culinary school, Cameron's career took him to the prestigious Little Inn at Washington Resort in Seattle, where he worked under renowned chefs and refined his techniques. This formative experience shaped his approach to fine dining and helped him develop his signature style.</p>
+                
+                <p>Currently, Chef Quinn is showcasing his talents at Benu, where he continues to push culinary boundaries and create extraordinary dining experiences. His cooking philosophy centers around showcasing the natural flavors of premium ingredients through sophisticated techniques that enhance rather than mask their inherent qualities.</p>
+                
+                <p>Chef Quinn is particularly known for his artistic plating, often described as "edible art" by food critics. His signature style combines classic techniques with contemporary presentations, resulting in dishes that are as visually stunning as they are delicious.</p>
+            </div>
+            
+            <div class="chef-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>{{ recipe_count|default:"18" }} Recipes</h3>
+                        <p>Shared on Cookbook</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>3 Michelin Stars</h3>
+                        <p>Culinary Excellence</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>St. Louis to San Francisco</h3>
+                        <p>Culinary Journey</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>Benu</h3>
+                        <p>Current Restaurant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="chef-tips-section">
+    <div class="container">
+        <h2 class="section-title">Cooking Philosophy</h2>
+        <div class="chef-tips-content">
+            <div class="chef-tips-text">
+                <p>
+                    <strong>Quality Ingredients Matter</strong>
+                    "The foundation of every exceptional dish is the quality of its ingredients. I always recommend seeking out the freshest, most seasonal products available to you."
+                </p>
+                
+                <p>
+                    <strong>Master the Basics</strong>
+                    "Before attempting complex techniques, ensure you've mastered the fundamentals. Understanding the principles of heat, seasoning, and timing will serve you better than memorizing complicated recipes."
+                </p>
+                
+                <p>
+                    <strong>Respect the Ingredient</strong>
+                    "Each ingredient has an optimal way to be prepared. Learning to highlight natural flavors rather than masking them is the hallmark of refined cooking."
+                </p>
+            </div>
+            
+            <div class="chef-tips-image">
+                <img src="/static/img/chefs/cameron-quinn.jpg" alt="Chef Cameron cooking">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="chef-recipes-section">
+    <div class="container">
+        <h2 class="section-title">Cameron's Recipes</h2>
+        
+        {% if recipes %}
+            
+            {% if user.username == 'cameron' %}
+            <div class="recipe-management">
+                <div class="management-tools">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Recipe
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-sort"></i> Manage Recipes
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="recipes-grid">
+                {% for recipe in recipes %}
+                    <div class="recipe-card">
+                        <div class="recipe-image-container">
+                            {% if recipe.image %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                            {% else %}
+                                <div class="recipe-card-placeholder">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="recipe-card-body">
+                            <span class="category-badge">{{ recipe.category.name }}</span>
+                            <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                            <p class="recipe-card-desc">{{ recipe.description|truncatechars:100 }}</p>
+                            <div class="recipe-meta">
+                                <span><i class="far fa-clock"></i> {{ recipe.total_time }} min</span>
+                                <span><i class="fas fa-utensils"></i> {{ recipe.difficulty|title }}</span>
+                            </div>
+                            <div class="recipe-actions">
+                                <a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
+                                
+                                
+                                {% if user.username == 'cameron' %}
+                                <div class="recipe-admin-actions">
+                                    <a href="{% url 'recipes:recipe_edit' slug=recipe.slug %}" class="btn btn-sm btn-edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{% url 'recipes:recipe_delete' slug=recipe.slug %}" class="btn btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-recipes-message">
+                <p>No recipes available yet. {% if user.username == 'cameron' %}Why not add your first recipe?{% else %}Check back soon!{% endif %}</p>
+                
+                {% if user.username == 'cameron' %}
+                <div class="empty-state-action">
+                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> Add Your First Recipe
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+
+<section class="back-to-section">
+    <div class="container">
+        <a href="{% url 'chefs' %}" class="btn btn-outline btn-lg">
+            <i class="fas fa-arrow-left"></i> Back to All Chefs
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        recipeCards.forEach(card => {
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}
