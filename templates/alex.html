@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Chef Alex Molina - Home-Style Cooking{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/alex.css">
+<link rel="stylesheet" href="{% static 'css/alex.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,15 +14,31 @@
             <div class="chef-profile">
                 <div class="chef-header">
                     <div class="chef-image-container">
-                        <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="chef-image">
+                        {% if chef.image %}
+                            <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+                        {% else %}
+                            <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="chef-image">
+                        {% endif %}
                     </div>
                     <div class="chef-info">
-                        <h1 class="chef-name">Alex Molina</h1>
-                        <p class="chef-specialty">Home-Style Cooking</p>
+                        <h1 class="chef-name">{{ chef.name }}</h1>
+                        <p class="chef-specialty">{{ chef.specialty }}</p>
                         <div class="chef-social">
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% if chef.instagram %}
+                                <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if chef.twitter %}
+                                <a href="{{ chef.twitter }}" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if chef.youtube %}
+                                <a href="{{ chef.youtube }}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -29,9 +46,13 @@
                 <div class="chef-section" id="journey">
                     <h2>My Culinary Journey</h2>
                     <div class="chef-content">
-                        <p>Growing up in a household where money was tight taught me one of life's most valuable lessons: you don't need expensive restaurant meals to enjoy extraordinary food. In our home, financial constraints never limited the flavors that came from our kitchen. My family turned necessity into an art form, creating dishes that would have everyone in the neighborhood talking.</p>
-                        
-                        <p>These early experiences shaped my understanding of food as more than just sustenance—it was our way of showing love, creativity, and pride despite our circumstances. The aromas that filled our modest home carried stories of heritage, resourcefulness, and community that no upscale restaurant could replicate.</p>
+                        {% if chef.bio %}
+                            {{ chef.bio|linebreaks }}
+                        {% else %}
+                            <p>Growing up in a household where money was tight taught me one of life's most valuable lessons: you don't need expensive restaurant meals to enjoy extraordinary food. In our home, financial constraints never limited the flavors that came from our kitchen. My family turned necessity into an art form, creating dishes that would have everyone in the neighborhood talking.</p>
+                            
+                            <p>These early experiences shaped my understanding of food as more than just sustenance—it was our way of showing love, creativity, and pride despite our circumstances. The aromas that filled our modest home carried stories of heritage, resourcefulness, and community that no upscale restaurant could replicate.</p>
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -44,38 +65,59 @@
                     </div>
                 </div>
                 
-                
                 <div class="chef-section" id="signature-dishes">
                     <h2>Signature Dishes</h2>
                     <div class="chef-content">
                         <div class="dish-list">
-                            <div class="dish-item" id="dish-ceviche">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Fresh Ceviche</h3>
-                                <p>A vibrant celebration of seafood transformed by citrus, combining delicate textures with bold flavors.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>My ceviche combines fresh white fish, shrimp, lime juice, cilantro, and a hint of jalapeño for a bright, refreshing starter.</p>
+                            {% if featured_recipes %}
+                                {% for recipe in featured_recipes|slice:":3" %}
+                                    <div class="dish-item" id="dish-{{ forloop.counter }}">
+                                        <div class="dish-image-placeholder">
+                                            {% if recipe.image %}
+                                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                            {% endif %}
+                                        </div>
+                                        <h3>{{ recipe.title }}</h3>
+                                        <p>{{ recipe.description|truncatewords:20 }}</p>
+                                        <span class="dish-details-btn">View Details</span>
+                                        <div class="dish-details">
+                                            <p>{{ recipe.description }}</p>
+                                            <div class="recipe-meta">
+                                                <span><i class="far fa-clock"></i> Prep: {{ recipe.prep_time }} min</span>
+                                                <span><i class="fas fa-fire"></i> Cook: {{ recipe.cook_time }} min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="dish-item" id="dish-ceviche">
+                                    <div class="dish-image-placeholder"></div>
+                                    <h3>Fresh Ceviche</h3>
+                                    <p>A vibrant celebration of seafood transformed by citrus, combining delicate textures with bold flavors.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>My ceviche combines fresh white fish, shrimp, lime juice, cilantro, and a hint of jalapeño for a bright, refreshing starter.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="dish-item" id="dish-ribeye">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Bone-in Ribeye with Mushroom Sauce</h3>
-                                <p>A rustic yet sophisticated dish that honors the beauty of perfectly cooked beef enhanced by earthy mushrooms.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>This dish features a perfectly seared ribeye steak with a rich sauce of wild mushrooms, herbs, and a touch of cream.</p>
+                                <div class="dish-item" id="dish-ribeye">
+                                    <div class="dish-image-placeholder"></div>
+                                    <h3>Bone-in Ribeye with Mushroom Sauce</h3>
+                                    <p>A rustic yet sophisticated dish that honors the beauty of perfectly cooked beef enhanced by earthy mushrooms.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>This dish features a perfectly seared ribeye steak with a rich sauce of wild mushrooms, herbs, and a touch of cream.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="dish-item" id="dish-soup">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Coconut Thai Soup</h3>
-                                <p>A harmonious blend of aromatic herbs, creamy coconut, and perfectly balanced spices that transport you to Southeast Asia.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>My version of Tom Kha Gai uses lemongrass, galangal, coconut milk, and tender chicken for a comforting bowl of warmth.</p>
+                                <div class="dish-item" id="dish-soup">
+                                    <div class="dish-image-placeholder"></div>
+                                    <h3>Coconut Thai Soup</h3>
+                                    <p>A harmonious blend of aromatic herbs, creamy coconut, and perfectly balanced spices that transport you to Southeast Asia.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>My version of Tom Kha Gai uses lemongrass, galangal, coconut milk, and tender chicken for a comforting bowl of warmth.</p>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -92,26 +134,37 @@
                     </div>
                 </div>
                 
-              
                 <div class="chef-section" id="stats">
                     <h2>Recipe Collection</h2>
                     <div class="chef-content">
                         <div class="stats-container">
                             <div class="stat-item" id="stat-total">
-                                <span class="stat-number">32</span>
+                                <span class="stat-number">{{ recipe_count|default:"0" }}</span>
                                 <span class="stat-label">Total Recipes</span>
                             </div>
                             <div class="stat-item" id="stat-category">
-                                <span class="stat-number">Home-Style</span>
+                                <span class="stat-number">
+                                    {% if categorized_recipes %}
+                                        {% for category in categorized_recipes %}
+                                            {% if forloop.first %}
+                                                {{ category }}
+                                            {% endif %}
+                                        {% empty %}
+                                            Home-Style
+                                        {% endfor %}
+                                    {% else %}
+                                        Home-Style
+                                    {% endif %}
+                                </span>
                                 <span class="stat-label">Top Category</span>
                             </div>
                             <div class="stat-item" id="stat-featured">
-                                <span class="stat-number">12</span>
+                                <span class="stat-number">{{ featured_recipes|length|default:"0" }}</span>
                                 <span class="stat-label">Featured Recipes</span>
                             </div>
                         </div>
                         <div class="view-all-recipes">
-                            <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">View All Recipes</a>
+                            <a href="{% url 'all_recipes' %}" class="btn btn-primary">View All Recipes</a>
                         </div>
                     </div>
                 </div>
@@ -119,7 +172,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="campfire-back-button">
     <a href="{% url 'chefs' %}" aria-label="Back to Chefs Page">
@@ -147,7 +199,7 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
+        // Toggle dish details when clicking the button
         const detailButtons = document.querySelectorAll('.dish-details-btn');
         detailButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -162,7 +214,7 @@
             });
         });
         
-       
+        // Animate stats when they come into view
         const statItems = document.querySelectorAll('.stat-item');
         const statObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -176,7 +228,7 @@
             statObserver.observe(item);
         });
         
-        
+        // Animate campfire flames
         const flames = document.querySelectorAll('.flame');
         flames.forEach(flame => {
             setInterval(() => {
@@ -185,7 +237,7 @@
             }, 100 + Math.random() * 200);
         });
         
-       
+        // Animate campfire sparks
         const sparks = document.querySelectorAll('.spark');
         sparks.forEach(spark => {
             setInterval(() => {

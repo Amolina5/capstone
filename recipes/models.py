@@ -39,19 +39,16 @@ class Chef(models.Model):
         super().save(*args, **kwargs)
     
     def get_recipes(self):
-        """Get all recipes by this chef"""
         if self.user:
             return self.user.recipes.all()
         return []
     
     def get_recipes_count(self):
-        """Get the count of recipes by this chef"""
         if self.user:
             return self.user.recipes.count()
         return 0
     
     def get_featured_recipes(self):
-        """Get featured recipes by this chef"""
         if self.user:
             return self.user.recipes.filter(is_featured=True)
         return []
@@ -90,26 +87,26 @@ class Recipe(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
-        # Auto-generate slug if not provided
+        
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
     
     @property
     def total_time(self):
-        """Return the total time (prep + cook) in minutes"""
+        
         return self.prep_time + self.cook_time
     
     @property
     def average_rating(self):
-        """Calculate the average rating for this recipe"""
+       
         ratings = self.ratings.all()
         if not ratings:
             return 0
         return sum(r.rating for r in ratings) / len(ratings)
     
     def get_chef(self):
-        """Get the chef profile associated with this recipe's author"""
+       
         try:
             return self.author.chef_profile
         except:

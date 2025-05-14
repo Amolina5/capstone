@@ -3,21 +3,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q, Avg
+from django.http import HttpResponse
+from django.template import TemplateDoesNotExist
 from .models import Recipe, Category, RecipeRating, Chef
 from .forms import RecipeForm, RatingForm
 
 def home_view(request):
-    """View for the homepage"""
-    # Get featured recipes for the homepage carousel
+
     featured_recipes = Recipe.objects.filter(is_featured=True)[:6]
     
-    # Get the latest recipes for the recent additions section
     latest_recipes = Recipe.objects.order_by('-created_at')[:6]
     
-    # Get all categories for the category navigation
     categories = Category.objects.all()
     
-    # Get featured chefs
     featured_chefs = Chef.objects.all()[:3]
     
     context = {
@@ -29,24 +27,23 @@ def home_view(request):
     return render(request, 'pages/home.html', context)
 
 def recipe_list(request):
-    """View for listing all recipes with filtering options"""
-    # Get all recipes
+   
     recipes = Recipe.objects.all()
     
-    # Get all categories for the filter sidebar
+    
     categories = Category.objects.all()
     
-    # Filter by category if requested
+  
     category_slug = request.GET.get('category')
     if category_slug:
         recipes = recipes.filter(category__slug=category_slug)
     
-    # Filter by difficulty if requested
+  
     difficulty = request.GET.get('difficulty')
     if difficulty:
         recipes = recipes.filter(difficulty=difficulty)
     
-    # Filter by chef if requested
+   
     chef_slug = request.GET.get('chef')
     if chef_slug:
         chef = get_object_or_404(Chef, slug=chef_slug)
@@ -63,23 +60,18 @@ def recipe_list(request):
     return render(request, 'recipes/recipe_list.html', context)
 
 def recipe_detail(request, slug):
-    """View for displaying a single recipe with ratings"""
-    # Get the requested recipe
+    
     recipe = get_object_or_404(Recipe, slug=slug)
     
-    # Get the rating form for logged-in users
     rating_form = RatingForm()
     
-    # Check if the user has already rated this recipe
     user_rating = None
     if request.user.is_authenticated:
         user_rating = RecipeRating.objects.filter(recipe=recipe, user=request.user).first()
     
-    # Get related recipes (same category or by same chef)
     related_by_category = Recipe.objects.filter(category=recipe.category).exclude(id=recipe.id)[:3]
     related_by_chef = Recipe.objects.filter(author=recipe.author).exclude(id=recipe.id)[:3]
     
-    # Try to get the chef profile of the recipe author
     try:
         chef = Chef.objects.get(user=recipe.author)
     except Chef.DoesNotExist:
@@ -93,14 +85,68 @@ def recipe_detail(request, slug):
         'related_by_chef': related_by_chef,
         'chef': chef,
     }
-    return render(request, 'recipes/recipe_detail.html', context)
+    
+    try:
+        return render(request, 'recipes/recipe_detail.html', context)
+    except TemplateDoesNotExist:
+        html_content = f"""
+        <html>
+        <head>
+            <title>{recipe.title} | Cookbook</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; }}
+                .container {{ max-width: 800px; margin: 0 auto; }}
+                h1 {{ color: #333; }}
+                .meta {{ color: #666; margin-bottom: 20px; }}
+                .section {{ margin-bottom: 30px; }}
+                .back-button {{ display: inline-block; padding: 10px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }}
+                img {{ max-width: 100%; height: auto; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>{recipe.title}</h1>
+                
+                <div class="meta">
+                    <p>
+                        <strong>Category:</strong> {recipe.category.name}<br>
+                        <strong>Chef:</strong> {recipe.author.username}<br>
+                        <strong>Difficulty:</strong> {recipe.difficulty.title()}<br>
+                        <strong>Prep Time:</strong> {recipe.prep_time} mins<br>
+                        <strong>Cook Time:</strong> {recipe.cook_time} mins<br>
+                        <strong>Servings:</strong> {recipe.servings}
+                    </p>
+                </div>
+                
+                {f'<img src="{recipe.image.url}" alt="{recipe.title}">' if recipe.image else ''}
+                
+                <div class="section">
+                    <h2>Description</h2>
+                    <p>{recipe.description.replace(chr(10), '<br>')}</p>
+                </div>
+                
+                <div class="section">
+                    <h2>Ingredients</h2>
+                    <p>{recipe.ingredients.replace(chr(10), '<br>')}</p>
+                </div>
+                
+                <div class="section">
+                    <h2>Instructions</h2>
+                    <p>{recipe.instructions.replace(chr(10), '<br>')}</p>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-button">Back</a>
+            </div>
+        </body>
+        </html>
+        """
+        return HttpResponse(html_content)
 
 def category_detail(request, slug):
-    """View for displaying all recipes in a specific category"""
-    # Get the requested category
+  
     category = get_object_or_404(Category, slug=slug)
     
-    # Get all recipes in this category
+    
     recipes = Recipe.objects.filter(category=category)
     
     context = {
@@ -111,7 +157,7 @@ def category_detail(request, slug):
 
 @login_required
 def recipe_add(request):
-    """View for adding a new recipe (requires login)"""
+   
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
@@ -131,11 +177,9 @@ def recipe_add(request):
 
 @login_required
 def recipe_edit(request, slug):
-    """View for editing an existing recipe (requires login and ownership)"""
-    # Get the recipe to edit
     recipe = get_object_or_404(Recipe, slug=slug)
     
-    # Check if the current user is the author
+
     if recipe.author != request.user:
         messages.error(request, "You can't edit recipes that you didn't create.")
         return redirect('recipes:recipe_detail', slug=recipe.slug)
@@ -158,11 +202,9 @@ def recipe_edit(request, slug):
 
 @login_required
 def recipe_delete(request, slug):
-    """View for deleting a recipe (requires login and ownership)"""
-    # Get the recipe to delete
+
     recipe = get_object_or_404(Recipe, slug=slug)
     
-    # Check if the current user is the author
     if recipe.author != request.user:
         messages.error(request, "You can't delete recipes that you didn't create.")
         return redirect('recipes:recipe_detail', slug=recipe.slug)
@@ -179,12 +221,10 @@ def recipe_delete(request, slug):
 
 @login_required
 def recipe_rate(request, slug):
-    """View for rating a recipe (requires login)"""
-    # Get the recipe to rate
+
     recipe = get_object_or_404(Recipe, slug=slug)
     
     if request.method == 'POST':
-        # Create or update the user's rating
         rating, created = RecipeRating.objects.get_or_create(
             recipe=recipe,
             user=request.user,
@@ -194,7 +234,6 @@ def recipe_rate(request, slug):
             }
         )
         
-        # If the rating already existed, update it
         if not created:
             rating.rating = request.POST.get('rating')
             rating.comment = request.POST.get('comment', '')
@@ -205,25 +244,20 @@ def recipe_rate(request, slug):
     return redirect('recipes:recipe_detail', slug=slug)
 
 def chefs_view(request):
-    """View for the main chefs listing page"""
-    # Get all chefs
+
     chefs = Chef.objects.all()
     
-    # Enhance each chef with recipe information
     for chef in chefs:
         if chef.user:
-            # Get the featured recipe for this chef
             chef.featured_recipe = Recipe.objects.filter(
                 author=chef.user, 
                 is_featured=True
             ).first()
-            
-            # Count recipes by this chef
+
             chef.recipe_count = Recipe.objects.filter(
                 author=chef.user
             ).count()
             
-            # Get average rating of recipes by this chef
             chef.avg_rating = Recipe.objects.filter(
                 author=chef.user
             ).annotate(
@@ -234,51 +268,44 @@ def chefs_view(request):
             chef.recipe_count = 0
             chef.avg_rating = 0
     
+    # Get featured recipes for the signature dishes section
+    featured_recipes = Recipe.objects.filter(is_featured=True)[:5]
+    
     context = {
-        'chefs': chefs
+        'chefs': chefs,
+        'featured_recipes': featured_recipes
     }
     
-    # THIS WAS MISSING: Return an HttpResponse
     return render(request, 'pages/chefs.html', context)
 
 def recipes_view(request):
-    """View for the main recipes page, organized by chef"""
-    # Get all chefs that have user accounts
+
     chefs = Chef.objects.exclude(user__isnull=True)
     
-    # Get all categories for filtering
     categories = Category.objects.all()
     
-    # Filter by category if requested
-    category_slug = request.GET.get('category', '')  # Default to empty string
+    category_slug = request.GET.get('category', '') 
     category_filter = None
     
     if category_slug and category_slug != '':
         try:
             category_filter = Category.objects.get(slug=category_slug)
         except Category.DoesNotExist:
-            # If category doesn't exist, don't filter
             pass
     
-    # Prepare chef data for the template
     chefs_with_recipes = []
     
     for chef in chefs:
-        # Get recipes by this chef
         chef_recipes = Recipe.objects.filter(author=chef.user)
         
-        # Apply category filter if selected
         if category_filter:
             chef_recipes = chef_recipes.filter(category=category_filter)
         
-        # Store recipes with the chef regardless of count
         chef.recipes = chef_recipes.order_by('-created_at')[:6]
         chef.recipe_count = chef_recipes.count()
-        
-        # Always include the chef, even if they have no recipes in this category
+
         chefs_with_recipes.append(chef)
-    
-    # Get total recipe count
+
     if category_filter:
         total_recipes = Recipe.objects.filter(category=category_filter).count()
     else:
@@ -299,20 +326,16 @@ def recipes_view(request):
     
     return render(request, 'pages/recipes.html', context)
 
-# Chef-specific views follow below
 
 def chef_detail_view(request, slug):
-    """Generic view for displaying any chef's profile by slug"""
-    # Get the chef by slug
+
     chef = get_object_or_404(Chef, slug=slug)
     
-    # Get recipes by this chef
     if chef.user:
         recipes = Recipe.objects.filter(author=chef.user).order_by('-created_at')
         featured_recipes = recipes.filter(is_featured=True)[:3]
         recipe_count = recipes.count()
         
-        # Get recipe statistics
         categories = recipes.values('category__name').distinct()
         latest_recipe = recipes.first()
     else:
@@ -332,27 +355,84 @@ def chef_detail_view(request, slug):
         'latest_recipe': latest_recipe,
     }
     
-    # Use the generic chef_detail.html template if you want to create one
-    # Otherwise, you'd need to map specific slugs to specific templates
-    return render(request, 'recipes/chef_detail.html', context)
+    try:
+        return render(request, 'recipes/chef_detail.html', context)
+    except TemplateDoesNotExist:
+ 
+        html_content = f"""
+        <html>
+        <head>
+            <title>{chef.name} - Chef Profile | Cookbook</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; }}
+                .container {{ max-width: 1200px; margin: 0 auto; }}
+                h1 {{ color: #333; }}
+                .chef-image {{ max-width: 300px; border-radius: 50%; }}
+                .recipe-grid {{ display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; }}
+                .recipe-card {{ width: 300px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }}
+                .recipe-card img {{ width: 100%; height: 200px; object-fit: cover; }}
+                .recipe-card-body {{ padding: 15px; }}
+                .back-button {{ display: inline-block; padding: 10px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; margin-top: 20px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div style="display: flex; gap: 30px; margin-bottom: 30px;">
+                    {f'<img src="{chef.image.url}" alt="{chef.name}" class="chef-image">' if chef.image else ''}
+                    <div>
+                        <h1>{chef.name}</h1>
+                        <p><strong>Specialty:</strong> {chef.specialty}</p>
+                        <p><strong>Recipes:</strong> {recipe_count}</p>
+                        <div>
+                            {f'<a href="{chef.instagram}">Instagram</a> ' if chef.instagram else ''}
+                            {f'<a href="{chef.twitter}">Twitter</a> ' if chef.twitter else ''}
+                            {f'<a href="{chef.youtube}">YouTube</a>' if chef.youtube else ''}
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2>Biography</h2>
+                    <p>{chef.bio.replace(chr(10), '<br>')}</p>
+                </div>
+                
+                <div>
+                    <h2>Recipes by {chef.name}</h2>
+                    <div class="recipe-grid">
+                        {''.join([f"""
+                            <div class="recipe-card">
+                                {f'<img src="{recipe.image.url}" alt="{recipe.title}">' if recipe.image else ''}
+                                <div class="recipe-card-body">
+                                    <h3>{recipe.title}</h3>
+                                    <p>{recipe.description[:100]}...</p>
+                                    <p><strong>Category:</strong> {recipe.category.name}</p>
+                                    <p><strong>Difficulty:</strong> {recipe.difficulty.title()}</p>
+                                    <p><strong>Time:</strong> {recipe.prep_time + recipe.cook_time} mins</p>
+                                </div>
+                            </div>
+                        """ for recipe in recipes[:6]])}
+                    </div>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-button">Back</a>
+            </div>
+        </body>
+        </html>
+        """
+        return HttpResponse(html_content)
 
 def chef_cameron_view(request):
-    """View for Cameron Quinn's chef page"""
     try:
-        # Get Cameron's user and chef profile
         cameron_user = User.objects.get(username='cameron-quinn')
         chef = Chef.objects.get(user=cameron_user)
         
-        # Get recipes by Cameron
         recipes = Recipe.objects.filter(author=cameron_user).order_by('-created_at')
         featured_recipes = recipes.filter(is_featured=True)[:3]
         recipe_count = recipes.count()
         
-        # Get recent recipes
         recent_recipes = recipes[:5]
         
     except (User.DoesNotExist, Chef.DoesNotExist):
-        # Fallback if user or chef doesn't exist
         chef = None
         recipes = []
         featured_recipes = []
@@ -371,18 +451,15 @@ def chef_cameron_view(request):
     return render(request, 'cameron.html', context)
 
 def chef_alex_view(request):
-    """View for Alex Molina's chef page"""
     try:
-        # Get Alex's user and chef profile
         alex_user = User.objects.get(username='alex-molina')
         chef = Chef.objects.get(user=alex_user)
         
-        # Get recipes by Alex
         recipes = Recipe.objects.filter(author=alex_user).order_by('-created_at')
         featured_recipes = recipes.filter(is_featured=True)[:3]
         recipe_count = recipes.count()
         
-        # Get recipes by category
+ 
         categorized_recipes = {}
         for recipe in recipes:
             category_name = recipe.category.name
@@ -391,7 +468,7 @@ def chef_alex_view(request):
             categorized_recipes[category_name].append(recipe)
         
     except (User.DoesNotExist, Chef.DoesNotExist):
-        # Fallback if user or chef doesn't exist
+
         chef = None
         recipes = []
         featured_recipes = []
@@ -410,13 +487,10 @@ def chef_alex_view(request):
     return render(request, 'alex.html', context)
 
 def chef_wade_view(request):
-    """View for Wade Alexander's chef page"""
     try:
-        # Get Wade's user and chef profile
         wade_user = User.objects.get(username='wade-alexandander')
         chef = Chef.objects.get(user=wade_user)
-        
-        # Get recipes by Wade
+
         recipes = Recipe.objects.filter(author=wade_user).order_by('-created_at')
         featured_recipes = recipes.filter(is_featured=True)[:3]
         recipe_count = recipes.count()
@@ -427,7 +501,6 @@ def chef_wade_view(request):
         ).filter(avg_rating__isnull=False).order_by('-avg_rating')[:5]
         
     except (User.DoesNotExist, Chef.DoesNotExist):
-        # Fallback if user or chef doesn't exist
         chef = None
         recipes = []
         featured_recipes = []
@@ -446,22 +519,15 @@ def chef_wade_view(request):
     return render(request, 'wade.html', context)
 
 def chef_couple_view(request):
-    """View for Nathan & Jade's couples cooking page"""
     try:
-        # Get both users
         nathan_user = User.objects.filter(username='nathan-jambo-jade-jambo').first()
-        # Since we've created a single user for the couple, we don't need jade_user
-        
-        # Get chef profile
+
         couple_chef = Chef.objects.filter(user=nathan_user).first() if nathan_user else None
         
-        # Get recipes by the couple
         if nathan_user:
             recipes = Recipe.objects.filter(author=nathan_user).order_by('-created_at')
             featured_recipes = recipes.filter(is_featured=True)[:3]
             recipe_count = recipes.count()
-            
-            # Get "date night" recipes - could be based on a specific category or tag
             date_night_recipes = recipes.filter(
                 Q(title__icontains='date night') | 
                 Q(description__icontains='date night') |
@@ -491,24 +557,21 @@ def chef_couple_view(request):
     return render(request, 'nate.html', context)
 
 def chef_amanda_view(request):
-    """View for Amanda's Family Cookbook page"""
     try:
-        # Get Amanda's user and chef profile
+  
         amanda_user = User.objects.filter(username='amanda-molina').first()
         chef = Chef.objects.filter(user=amanda_user).first() if amanda_user else None
         
         if amanda_user:
-            # Get all of Amanda's recipes
+
             recipes = Recipe.objects.filter(author=amanda_user).order_by('-created_at')
             featured_recipes = recipes.filter(is_featured=True)[:3]
             recipe_count = recipes.count()
             
-            # Get family favorites - could be based on a specific tag or high ratings
             family_favorites = recipes.annotate(
                 avg_rating=Avg('ratings__rating')
             ).filter(avg_rating__gte=4.0)[:5]
             
-            # Group recipes by category for the family cookbook
             recipe_categories = {}
             for recipe in recipes:
                 category_name = recipe.category.name

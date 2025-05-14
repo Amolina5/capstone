@@ -8,7 +8,7 @@
 
 /* ===== VARIABLES ===== */
 :root {
-    /* Colors */
+
     --primary-gold: #c8a97e;
     --primary-gold-light: #e4d5ba;
     --primary-dark: #1c1c1c;
@@ -20,18 +20,16 @@
     --bg-dark: #121212;
     --border-light: rgba(255, 255, 255, 0.1);
     
-    /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
     --spacing-lg: 4rem;
     --spacing-xl: 6rem;
     
-    /* Typography */
+
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Montserrat', sans-serif;
     
-    /* Other */
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --box-shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -39,7 +37,6 @@
     --transition-standard: all 0.3s ease;
 }
 
-/* ===== BASE STYLES ===== */
 * {
     margin: 0;
     padding: 0;
@@ -98,7 +95,6 @@ a:hover {
     padding: 0 var(--spacing-md);
 }
 
-/* ===== HEADER ===== */
 header {
     background-color: var(--bg-dark);
     color: var(--text-light);
@@ -162,7 +158,6 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
-/* ===== HERO SECTION ===== */
 .chef-hero {
     position: relative;
     background-color: var(--bg-dark);
@@ -294,7 +289,6 @@ nav ul li a:hover::after {
     transform: translateY(-3px);
 }
 
-/* ===== BIO SECTION ===== */
 .chef-bio-section {
     padding: var(--spacing-xl) 0;
     position: relative;
@@ -425,7 +419,6 @@ nav ul li a:hover::after {
     font-size: 0.9rem;
 }
 
-/* ===== RECIPES SECTION ===== */
 .chef-featured-recipes, .chef-recipes-section {
     padding: var(--spacing-xl) 0;
     background-color: var(--bg-light);
@@ -598,7 +591,6 @@ nav ul li a:hover::after {
     margin-top: var(--spacing-lg);
 }
 
-/* ===== CHEF TIPS SECTION ===== */
 .chef-tips-section {
     padding: var(--spacing-xl) 0;
     background-color: var(--bg-light);
@@ -658,13 +650,11 @@ nav ul li a:hover::after {
     transform: scale(1.05);
 }
 
-/* ===== BACK TO SECTION ===== */
 .back-to-section {
     padding: var(--spacing-lg) 0;
     text-align: center;
 }
 
-/* ===== FOOTER ===== */
 footer {
     background-color: var(--bg-dark);
     color: var(--text-light);
@@ -747,7 +737,6 @@ footer::before {
     font-size: 0.85rem;
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -769,7 +758,6 @@ footer::before {
     animation-delay: 0.6s;
 }
 
-/* ===== MEDIA QUERIES ===== */
 @media (max-width: 1200px) {
     .chef-hero-image {
         width: 320px;
@@ -882,7 +870,6 @@ footer::before {
     }
 }
 
-/* ===== PRINT STYLES ===== */
 @media print {
     .chef-hero {
         background-color: transparent !important;

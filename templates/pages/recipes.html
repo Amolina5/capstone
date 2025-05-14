@@ -135,11 +135,11 @@
 {{ block.super }}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Enhance scrolling behavior for recipe rows
+    
     const recipeRows = document.querySelectorAll('.recipe-row');
     
     recipeRows.forEach(row => {
-        // Add horizontal scroll with mouse wheel
+        
         row.addEventListener('wheel', function(e) {
             if (e.deltaY !== 0) {
                 e.preventDefault();
@@ -147,9 +147,9 @@
             }
         });
         
-        // Add arrow navigation for recipe rows
+        
         const cards = row.querySelectorAll('.recipe-card');
-        if (cards.length > 3) {  // Only add navigation if there are enough cards
+        if (cards.length > 3) {  
             const leftArrow = document.createElement('button');
             leftArrow.className = 'scroll-arrow scroll-left';
             leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
@@ -169,7 +169,7 @@
         }
     });
     
-    // MODIFIED: Make chef sections visible immediately without animations
+    
     const chefSections = document.querySelectorAll('.chef-section');
     chefSections.forEach(section => {
         section.style.opacity = '1';

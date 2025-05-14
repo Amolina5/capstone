@@ -27,10 +27,9 @@
                 
                 
                 {% if user.username == 'cameron' %}
-                <div class="chef-actions">
-                    <a href="{% url 'recipes:recipe_add' %}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-plus"></i> Add New Recipe
-                    </a>
+                <div class="recipe-meta">
+                    <span><i class="far fa-clock"></i> Prep: {{ recipe.prep_time }} min</span>
+                    <span><i class="fas fa-fire"></i> Cook: {{ recipe.cook_time }} min</span>
                 </div>
                 {% endif %}
             </div>

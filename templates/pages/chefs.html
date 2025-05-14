@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Our Chefs | Cookbook{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/chefs.css">
+<link rel="stylesheet" href="{% static 'css/chefs.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,10 +15,71 @@
         <p class="section-description">Discover recipes created by our talented culinary experts, each with their own unique specialties and cooking styles.</p>
         
         <div class="chefs-grid">
+            <!-- Looking for chefs from the database first -->
+            {% for chef in chefs %}
+            <div class="chef-card">
+                <div class="chef-image-container">
+                    {% if chef.image %}
+                        <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+                    {% elif chef.slug == 'cameron-quinn' %}
+                        <img src="{% static 'img/cameron.jpg' %}" alt="Chef Cameron Quinn" class="chef-image">
+                    {% elif chef.slug == 'wade-alexandander' %}
+                        <img src="{% static 'img/chefs/wade-alexander.jpg' %}" alt="Chef Wade Alexander" class="chef-image">
+                    {% elif chef.slug == 'alex-molina' %}
+                        <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="chef-image">
+                    {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                        <img src="{% static 'img/chefs/nathan.jpg' %}" alt="Chef Nathan" class="chef-image nathan-img">
+                    {% elif chef.slug == 'amanda-molina' %}
+                        <img src="{% static 'img/chefs/amanda.jpg' %}" alt="Amanda" class="chef-image">
+                    {% else %}
+                        <img src="{% static 'img/default-chef.jpg' %}" alt="{{ chef.name }}" class="chef-image">
+                    {% endif %}
+                </div>
+                <div class="chef-info">
+                    <h3 class="chef-name">{{ chef.name }}</h3>
+                    <p class="chef-specialty">{{ chef.specialty }}</p>
+                    <p class="chef-bio">{{ chef.bio|truncatewords:25 }}</p>
+                    <p class="chef-recipes">{{ chef.recipe_count }} recipes</p>
+                    <div class="chef-social">
+                        {% if chef.instagram %}
+                            <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        {% else %}
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if chef.twitter %}
+                            <a href="{{ chef.twitter }}" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        {% else %}
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if chef.youtube %}
+                            <a href="{{ chef.youtube }}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        {% else %}
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="chef-profile-link">
+                        {% if chef.slug == 'cameron-quinn' %}
+                            <a href="{% url 'chef_cameron' %}" class="btn btn-primary">View Profile</a>
+                        {% elif chef.slug == 'alex-molina' %}
+                            <a href="{% url 'chef_alex' %}" class="btn btn-primary">View Profile</a>
+                        {% elif chef.slug == 'wade-alexandander' %}
+                            <a href="{% url 'chef_wade' %}" class="btn btn-primary">View Profile</a>
+                        {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                            <a href="{% url 'chef_couple' %}" class="btn btn-primary">View Profile</a>
+                        {% elif chef.slug == 'amanda-molina' %}
+                            <a href="{% url 'chef_amanda' %}" class="btn btn-primary">View Profile</a>
+                        {% else %}
+                            <a href="#" class="btn btn-primary">View Profile</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- If no chefs in database, show hardcoded chefs -->
             <!-- Chef Card 1 -->
             <div class="chef-card">
                 <div class="chef-image-container">
-                    <img src="/static/img/cameron.jpg" alt="Chef Cameron Quinn" class="chef-image">
+                    <img src="{% static 'img/cameron.jpg' %}" alt="Chef Cameron Quinn" class="chef-image">
                 </div>
                 <div class="chef-info">
                     <h3 class="chef-name">Cameron Quinn</h3>
@@ -38,7 +100,7 @@
             <!-- Chef Card 2 -->
             <div class="chef-card">
                 <div class="chef-image-container">
-                    <img src="/static/img/chefs/wade-alexander.jpg" alt="Chef Wade Alexander" class="chef-image">
+                    <img src="{% static 'img/chefs/wade-alexander.jpg' %}" alt="Chef Wade Alexander" class="chef-image">
                 </div>
                 <div class="chef-info">
                     <h3 class="chef-name">Wade Alexander</h3>
@@ -59,7 +121,7 @@
             <!-- Chef Card 3 -->
             <div class="chef-card">
                 <div class="chef-image-container">
-                    <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="chef-image">
+                    <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="chef-image">
                 </div>
                 <div class="chef-info">
                     <h3 class="chef-name">Alex Molina</h3>
@@ -81,8 +143,8 @@
             <div class="chef-card couple-card">
                 <div class="chef-image-container">
                     <div class="couple-images">
-                        <img src="/static/img/chefs/nathan.jpg" alt="Chef Nathan" class="chef-image nathan-img">
-                        <img src="/static/img/chefs/jade.jpg" alt="Chef Jade" class="chef-image jade-img">
+                        <img src="{% static 'img/chefs/nathan.jpg' %}" alt="Chef Nathan" class="chef-image nathan-img">
+                        <img src="{% static 'img/chefs/jade.jpg' %}" alt="Chef Jade" class="chef-image jade-img">
                         <div class="heart-overlay">
                             <i class="fas fa-heart"></i>
                         </div>
@@ -107,7 +169,7 @@
             <!-- Chef Card 5 - Amanda's Family Cookbook -->
             <div class="chef-card">
                 <div class="chef-image-container">
-                    <img src="/static/img/chefs/amanda.jpg" alt="Amanda's Family Cookbook" class="chef-image">
+                    <img src="{% static 'img/chefs/amanda.jpg' %}" alt="Amanda's Family Cookbook" class="chef-image">
                 </div>
                 <div class="chef-info">
                     <h3 class="chef-name">Amanda's Family Cookbook</h3>
@@ -124,6 +186,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -135,92 +198,153 @@
         <p class="section-description">Try these handpicked recipes from our talented chefs</p>
         
         <div class="chef-recipes-grid">
-            <!-- Recipe 1 -->
-            <div class="recipe-card">
-                <div class="recipe-chef">
-                    <img src="/static/img/chefs/cameron-quinn.jpg" alt="Chef Cameron Quinn" class="recipe-chef-img">
-                    <span class="recipe-chef-name">Cameron Quinn</span>
-                </div>
-                <div class="recipe-image-container">
-                    <img src="/static/img/recipes/scallops.jpg" alt="Seared Scallops" class="recipe-card-img">
-                </div>
-                <div class="recipe-card-body">
-                    <span class="category-badge">Fine Dining</span>
-                    <h3 class="recipe-card-title">Seared Scallops with Citrus Reduction</h3>
-                    <p class="recipe-card-desc">Perfectly seared scallops served with a delicate citrus reduction and seasonal micro greens.</p>
-                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
-                </div>
-            </div>
-            
-            <!-- Recipe 2 -->
-            <div class="recipe-card">
-                <div class="recipe-chef">
-                    <img src="/static/img/chefs/wade-alexander.jpg" alt="Chef Wade Alexander" class="recipe-chef-img">
-                    <span class="recipe-chef-name">Wade Alexander</span>
-                </div>
-                <div class="recipe-image-container">
-                    <img src="/static/img/recipes/loaded-fries.jpg" alt="Loaded Fries" class="recipe-card-img">
-                </div>
-                <div class="recipe-card-body">
-                    <span class="category-badge">Bar Food</span>
-                    <h3 class="recipe-card-title">Gourmet Loaded Fries</h3>
-                    <p class="recipe-card-desc">Triple-cooked fries topped with slow-braised pulled pork, caramelized onions, and smoked cheddar sauce.</p>
-                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
-                </div>
-            </div>
-            
-            <!-- Recipe 3 -->
-            <div class="recipe-card">
-                <div class="recipe-chef">
-                    <img src="/static/img/chefs/alex-molina.jpg" alt="Chef Alex Molina" class="recipe-chef-img">
-                    <span class="recipe-chef-name">Alex Molina</span>
-                </div>
-                <div class="recipe-image-container">
-                    <img src="/static/img/recipes/pasta.jpg" alt="Homemade Pasta" class="recipe-card-img">
-                </div>
-                <div class="recipe-card-body">
-                    <span class="category-badge">Home Cooking</span>
-                    <h3 class="recipe-card-title">Simple Homemade Pasta</h3>
-                    <p class="recipe-card-desc">Easy homemade pasta with a classic tomato sauce that anyone can master - no special equipment required.</p>
-                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
-                </div>
-            </div>
-            
-            <!-- Recipe 4 -->
-            <div class="recipe-card">
-                <div class="recipe-chef">
-                    <div class="recipe-chef-couple">
-                        <img src="/static/img/chefs/nathan.jpg" alt="Chef Nathan & Jade" class="recipe-chef-img">
-                        <span class="recipe-chef-name">Nathan & Jade</span>
+            {% if featured_recipes %}
+                {% for recipe in featured_recipes %}
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        {% if recipe.get_chef and recipe.get_chef.image %}
+                            <img src="{{ recipe.get_chef.image.url }}" alt="{{ recipe.get_chef.name }}" class="recipe-chef-img">
+                        {% else %}
+                            {% with chef_name=recipe.author.username %}
+                                {% if chef_name == 'cameron-quinn' %}
+                                    <img src="{% static 'img/chefs/cameron-quinn.jpg' %}" alt="Chef Cameron Quinn" class="recipe-chef-img">
+                                {% elif chef_name == 'wade-alexandander' %}
+                                    <img src="{% static 'img/chefs/wade-alexander.jpg' %}" alt="Chef Wade Alexander" class="recipe-chef-img">
+                                {% elif chef_name == 'alex-molina' %}
+                                    <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="recipe-chef-img">
+                                {% elif chef_name == 'nathan-jambo-jade-jambo' %}
+                                    <img src="{% static 'img/chefs/nathan.jpg' %}" alt="Chef Nathan & Jade" class="recipe-chef-img">
+                                {% elif chef_name == 'amanda-molina' %}
+                                    <img src="{% static 'img/chefs/amanda.jpg' %}" alt="Amanda's Family Cookbook" class="recipe-chef-img">
+                                {% else %}
+                                    <img src="{% static 'img/default-chef.jpg' %}" alt="{{ chef_name }}" class="recipe-chef-img">
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                        <span class="recipe-chef-name">{{ recipe.get_chef.name|default:recipe.author.username }}</span>
+                    </div>
+                    <div class="recipe-image-container">
+                        {% if recipe.image %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
+                        {% else %}
+                            <img src="{% static 'img/default-recipe.jpg' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                        {% endif %}
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">{{ recipe.category.name }}</span>
+                        <h3 class="recipe-card-title">{{ recipe.title }}</h3>
+                        <p class="recipe-card-desc">{{ recipe.description|truncatewords:15 }}</p>
+                        <!-- Display recipe info instead of linking to recipe detail -->
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: {{ recipe.prep_time }} min</span>
+                            <span><i class="fas fa-fire"></i> Cook: {{ recipe.cook_time }} min</span>
+                        </div>
                     </div>
                 </div>
-                <div class="recipe-image-container">
-                    <img src="/static/img/recipes/date-night-risotto.jpg" alt="Date Night Risotto" class="recipe-card-img">
+                {% endfor %}
+            {% else %}
+                <!-- Recipe 1 -->
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        <img src="{% static 'img/chefs/cameron-quinn.jpg' %}" alt="Chef Cameron Quinn" class="recipe-chef-img">
+                        <span class="recipe-chef-name">Cameron Quinn</span>
+                    </div>
+                    <div class="recipe-image-container">
+                        <img src="{% static 'img/recipes/scallops.jpg' %}" alt="Seared Scallops" class="recipe-card-img">
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">Fine Dining</span>
+                        <h3 class="recipe-card-title">Seared Scallops with Citrus Reduction</h3>
+                        <p class="recipe-card-desc">Perfectly seared scallops served with a delicate citrus reduction and seasonal micro greens.</p>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: 20 min</span>
+                            <span><i class="fas fa-fire"></i> Cook: 10 min</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="recipe-card-body">
-                    <span class="category-badge">Date Night</span>
-                    <h3 class="recipe-card-title">Two-Person Champagne Risotto</h3>
-                    <p class="recipe-card-desc">A romantic risotto for two that's perfect for date night, with each person taking on different parts of the recipe.</p>
-                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                
+                <!-- Recipe 2 -->
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        <img src="{% static 'img/chefs/wade-alexander.jpg' %}" alt="Chef Wade Alexander" class="recipe-chef-img">
+                        <span class="recipe-chef-name">Wade Alexander</span>
+                    </div>
+                    <div class="recipe-image-container">
+                        <img src="{% static 'img/recipes/loaded-fries.jpg' %}" alt="Loaded Fries" class="recipe-card-img">
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">Bar Food</span>
+                        <h3 class="recipe-card-title">Gourmet Loaded Fries</h3>
+                        <p class="recipe-card-desc">Triple-cooked fries topped with slow-braised pulled pork, caramelized onions, and smoked cheddar sauce.</p>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: 30 min</span>
+                            <span><i class="fas fa-fire"></i> Cook: 45 min</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Recipe 5 - Amanda's Family Recipe -->
-            <div class="recipe-card">
-                <div class="recipe-chef">
-                    <img src="/static/img/chefs/amanda.jpg" alt="Amanda's Family Cookbook" class="recipe-chef-img">
-                    <span class="recipe-chef-name">Amanda</span>
+                
+                <!-- Recipe 3 -->
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="recipe-chef-img">
+                        <span class="recipe-chef-name">Alex Molina</span>
+                    </div>
+                    <div class="recipe-image-container">
+                        <img src="{% static 'img/recipes/pasta.jpg' %}" alt="Homemade Pasta" class="recipe-card-img">
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">Home Cooking</span>
+                        <h3 class="recipe-card-title">Simple Homemade Pasta</h3>
+                        <p class="recipe-card-desc">Easy homemade pasta with a classic tomato sauce that anyone can master - no special equipment required.</p>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: 25 min</span>
+                            <span><i class="fas fa-fire"></i> Cook: 15 min</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="recipe-image-container">
-                    <img src="/static/img/recipes/apple-pie.jpg" alt="Grandma's Apple Pie" class="recipe-card-img">
+                
+                <!-- Recipe 4 -->
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        <div class="recipe-chef-couple">
+                            <img src="{% static 'img/chefs/nathan.jpg' %}" alt="Chef Nathan & Jade" class="recipe-chef-img">
+                            <span class="recipe-chef-name">Nathan & Jade</span>
+                        </div>
+                    </div>
+                    <div class="recipe-image-container">
+                        <img src="{% static 'img/recipes/date-night-risotto.jpg' %}" alt="Date Night Risotto" class="recipe-card-img">
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">Date Night</span>
+                        <h3 class="recipe-card-title">Two-Person Champagne Risotto</h3>
+                        <p class="recipe-card-desc">A romantic risotto for two that's perfect for date night, with each person taking on different parts of the recipe.</p>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: 15 min</span>
+                            <span><i class="fas fa-fire"></i> Cook: 30 min</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="recipe-card-body">
-                    <span class="category-badge">Family Desserts</span>
-                    <h3 class="recipe-card-title">Grandma's Apple Pie</h3>
-                    <p class="recipe-card-desc">A treasured family recipe passed down through three generations, featuring a flaky crust and perfectly spiced apple filling.</p>
-                    <a href="#" class="btn btn-outline btn-sm">View Recipe</a>
+                
+                <!-- Recipe 5 - Amanda's Family Recipe -->
+                <div class="recipe-card">
+                    <div class="recipe-chef">
+                        <img src="{% static 'img/chefs/amanda.jpg' %}" alt="Amanda's Family Cookbook" class="recipe-chef-img">
+                        <span class="recipe-chef-name">Amanda</span>
+                    </div>
+                    <div class="recipe-image-container">
+                        <img src="{% static 'img/recipes/apple-pie.jpg' %}" alt="Grandma's Apple Pie" class="recipe-card-img">
+                    </div>
+                    <div class="recipe-card-body">
+                        <span class="category-badge">Family Desserts</span>
+                        <h3 class="recipe-card-title">Grandma's Apple Pie</h3>
+                        <p class="recipe-card-desc">A treasured family recipe passed down through three generations, featuring a flaky crust and perfectly spiced apple filling.</p>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> Prep: 40 min</span>
+                            <span><i class="fas fa-fire"></i> Cook: 60 min</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -241,7 +365,7 @@
                 <a href="#" class="btn btn-primary">Apply to Join</a>
             </div>
             <div class="become-chef-image">
-                <img src="/static/img/become-chef.jpg" alt="Chef preparing food">
+                <img src="{% static 'img/become-chef.jpg' %}" alt="Chef preparing food">
             </div>
         </div>
     </div>

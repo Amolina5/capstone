@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ recipe.title }} | Cookbook{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/recipe-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="recipe-detail">
+    <div class="container">
+        <div class="recipe-header">
+            <h1 class="recipe-title">{{ recipe.title }}</h1>
+            
+            <div class="recipe-meta">
+                <div class="recipe-author">
+                    {% if chef and chef.image %}
+                        <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-thumbnail">
+                    {% else %}
+                        <img src="{% static 'img/default-chef.jpg' %}" alt="Chef" class="chef-thumbnail">
+                    {% endif %}
+                    
+                    <span>By 
+                        {% if chef %}
+                            <a href="{% url 'chef_detail' slug=chef.slug %}">{{ chef.name }}</a>
+                        {% else %}
+                            {{ recipe.author.username }}
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <div class="recipe-stats">
+                    <span><i class="far fa-clock"></i> Prep: {{ recipe.prep_time }} mins</span>
+                    <span><i class="fas fa-fire"></i> Cook: {{ recipe.cook_time }} mins</span>
+                    <span><i class="fas fa-utensils"></i> {{ recipe.difficulty|title }}</span>
+                    <span><i class="fas fa-users"></i> Serves {{ recipe.servings }}</span>
+                </div>
+                
+                <div class="recipe-category">
+                    <span class="category-badge">{{ recipe.category.name }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="recipe-image-container">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                {% else %}
+                    <img src="{% static 'img/default-recipe.jpg' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                {% endif %}
+            </div>
+            
+            <div class="recipe-description">
+                {{ recipe.description|linebreaks }}
+            </div>
+            
+            <div class="recipe-main-content">
+                <div class="ingredients-container">
+                    <h2>Ingredients</h2>
+                    <div class="ingredients">
+                        {{ recipe.ingredients|linebreaks }}
+                    </div>
+                </div>
+                
+                <div class="instructions-container">
+                    <h2>Instructions</h2>
+                    <div class="instructions">
+                        {{ recipe.instructions|linebreaks }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recipe-footer">
+                <a href="javascript:history.back()" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -65,7 +65,6 @@
     align-self: flex-end;
 }
 
-/* Chef section styling */
 .chef-section {
     margin-bottom: 3rem;
     padding: 2rem 0;
@@ -138,8 +137,6 @@
     color: #888;
     font-size: 0.9rem;
 }
-
-/* Recipe row styling */
 .recipe-row {
     display: flex;
     flex-wrap: nowrap;
@@ -165,7 +162,6 @@
     background-color: #f1f1f1;
 }
 
-/* Recipe card styling */
 .recipe-card {
     flex: 0 0 300px;
     max-width: 300px;
@@ -270,7 +266,6 @@
     color: #fff;
 }
 
-/* Navigation arrows for recipe rows */
 .scroll-arrow {
     position: absolute;
     top: 50%;
@@ -304,7 +299,6 @@
     right: -15px;
 }
 
-/* View all link */
 .view-all-link {
     display: inline-block;
     margin-top: 0.5rem;
@@ -329,7 +323,6 @@
     transform: translateX(3px);
 }
 
-/* Empty states */
 .chef-empty-state {
     background-color: #f9f9f9;
     padding: 2rem;
@@ -349,7 +342,6 @@
     color: #666;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .chef-section-header {
         flex-direction: column;

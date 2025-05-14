@@ -9,7 +9,7 @@ class RecipeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     
     def get_chef_name(self, obj):
-        """Display chef name instead of username"""
+        
         try:
             chef = Chef.objects.get(user=obj.author)
             return chef.name
@@ -19,10 +19,10 @@ class RecipeAdmin(admin.ModelAdmin):
     get_chef_name.short_description = 'Chef'
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """Show chefs' names in the author dropdown"""
+        
         if db_field.name == "author":
             from django.contrib.auth.models import User
-            # Get users that have chef profiles
+            
             chef_users = User.objects.filter(chef_profile__isnull=False)
             kwargs["queryset"] = chef_users
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
