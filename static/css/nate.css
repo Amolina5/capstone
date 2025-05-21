@@ -37,8 +37,8 @@
 
 .couple-hero-images {
     position: relative;
-    width: 250px;
-    height: 250px;
+    width: 220px;
+    height: 220px;
     flex-shrink: 0;
     animation: float-images 5s ease-in-out infinite;
 }
@@ -49,9 +49,10 @@
 }
 
 .chef-image {
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    object-position: center 5%; /* Shifted even higher for maximum head focus */
     border: 5px solid #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border-radius: 50%;
@@ -386,8 +387,10 @@
 }
 
 .couple-tips-image img {
-    width: 100%;
-    height: auto;
+    width: 500px;
+    height: 350px;
+    object-fit: cover;
+    object-position: center 0%; /* Top position for maximum head focus */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.5s ease;
@@ -630,7 +633,15 @@
     .couple-tips-image {
         margin: 0 auto;
     }
+    
+    .couple-tips-image img {
+        width: 100%;
+        height: auto;
+        max-width: 500px;
+        max-height: 350px;
+    }
 }
+
 .back-to-section {
     text-align: center;
     padding: 60px 0;

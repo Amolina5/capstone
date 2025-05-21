@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Our Chefs | Cookbook{% endblock %}
+{% block title %}Our Chefs | Cookbook{% endblock title %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/chefs.css' %}">
-{% endblock %}
+<link rel="stylesheet" href='/static/css/chef.css'>
+{% endblock extra_css %}
 
 {% block content %}
 <!-- Chef Section -->
@@ -24,15 +24,15 @@
                     {% elif chef.slug == 'cameron-quinn' %}
                         <img src="{% static 'img/cameron.jpg' %}" alt="Chef Cameron Quinn" class="chef-image">
                     {% elif chef.slug == 'wade-alexandander' %}
-                        <img src="{% static 'img/chefs/wade-alexander.jpg' %}" alt="Chef Wade Alexander" class="chef-image">
+                        <img src="{% static 'img/wade.png' %}" alt="Chef Wade Alexander" class="chef-image">
                     {% elif chef.slug == 'alex-molina' %}
-                        <img src="{% static 'img/chefs/alex-molina.jpg' %}" alt="Chef Alex Molina" class="chef-image">
+                        <img src="{% static 'img/alex.png' %}" alt="Chef Alex Molina" class="chef-image">
                     {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
-                        <img src="{% static 'img/chefs/nathan.jpg' %}" alt="Chef Nathan" class="chef-image nathan-img">
+                        <img src="{% static 'img/nate.png' %}" alt="Chef Nathan" class="chef-image nathan-img">
                     {% elif chef.slug == 'amanda-molina' %}
-                        <img src="{% static 'img/chefs/amanda.jpg' %}" alt="Amanda" class="chef-image">
+                        <img src="{% static 'img/amanda.png' %}" alt="Amanda" class="chef-image">
                     {% else %}
-                        <img src="{% static 'img/default-chef.jpg' %}" alt="{{ chef.name }}" class="chef-image">
+                        <img src="{% static 'img/james.png' %}" alt="{{ chef.name }}" class="chef-image">
                     {% endif %}
                 </div>
                 <div class="chef-info">
@@ -370,4 +370,37 @@
         </div>
     </div>
 </section>
-{% endblock %}
+{% endblock content %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize chef cards with animation delay
+  const chefCards = document.querySelectorAll('.chef-card');
+  chefCards.forEach((card, index) => {
+    card.style.setProperty('--chef-index', index);
+  });
+  
+  // Initialize recipe cards with animation delay
+  const recipeCards = document.querySelectorAll('.recipe-card');
+  recipeCards.forEach((card, index) => {
+    card.style.setProperty('--recipe-index', index);
+  });
+  
+  // Add hover effect to become chef image
+  const becomeChefSection = document.querySelector('.become-chef');
+  const becomeChefImage = document.querySelector('.become-chef-image img');
+  
+  if (becomeChefSection && becomeChefImage) {
+    becomeChefSection.addEventListener('mouseenter', function() {
+      becomeChefImage.style.transform = 'translateY(-30px) rotate(0deg)';
+    });
+    
+    becomeChefSection.addEventListener('mouseleave', function() {
+      becomeChefImage.style.transform = 'translateY(-20px) rotate(2deg)';
+    });
+  }
+});
+</script>
+{% endblock extra_js %}
