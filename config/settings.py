@@ -70,12 +70,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # Get MongoDB connection string from environment variable
-MONGO_URI = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/cookbook')
+# Database
+MONGO_URI = os.environ.get('MONGO_URI', '')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'cookbook',
+        'CLIENT': {
+            'host': MONGO_URI,
+        }
     }
 }
 
