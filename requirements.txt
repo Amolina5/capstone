@@ -1,12 +1,11 @@
-
-django>=5.2,<6.0
+django>=4.2,<5.0
 pillow
 django-crispy-forms
 crispy-bootstrap4
 gunicorn
 whitenoise
 python-dotenv
-djongo==1.2.31
+djongo
 pymongo>=3.12.0,<4.0.0
 dnspython
 pytz
