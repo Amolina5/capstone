@@ -428,7 +428,7 @@ def chef_cameron_view(request):
         
         recipes = Recipe.objects.filter(author=cameron_user).order_by('-created_at')
         
-        # TEMPORARY DEBUG - remove after testing
+        
         print(f"Found user: {cameron_user}")
         print(f"Found chef: {chef}")
         print(f"Recipe count: {recipes.count()}")
@@ -439,7 +439,7 @@ def chef_cameron_view(request):
         recent_recipes = recipes[:5]
         
     except (User.DoesNotExist, Chef.DoesNotExist) as e:
-        print(f"ERROR: {e}")  # TEMPORARY DEBUG
+        print(f"ERROR: {e}")  
         chef = None
         recipes = []
         featured_recipes = []
