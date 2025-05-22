@@ -160,7 +160,9 @@ body.chefs-page {
 .chef-card:nth-child(4) {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-
+.chef-card:nth-child(4) .chef-image-container .nathan-img {
+  object-position: center 80px; /* CHANGED FROM center -50px to center 80px */
+}
 .chef-card:nth-child(4):hover {
   box-shadow: 0 20px 40px var(--glow-couple);
   border-top-color: var(--chef-secondary);
@@ -190,9 +192,9 @@ body.chefs-page {
 
 .chef-image-container {
   position: relative;
-  height: 320px;
+  height: 280px;
   overflow: hidden;
-  margin-top: -50px; 
+  margin-top: -90px; /* CHANGED FROM -70px to -90px (moves ALL images up more) */
 }
 
 .chef-card:nth-child(1) .chef-image-container .chef-image {
