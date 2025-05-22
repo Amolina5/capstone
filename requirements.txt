@@ -1,3 +1,4 @@
+
 django>=5.2,<6.0
 pillow
 django-crispy-forms
@@ -9,4 +10,4 @@ djongo==1.2.31
 pymongo>=3.12.0,<4.0.0
 dnspython
 pytz
-sqlparse==0.2.4
+sqlparse>=0.3.1

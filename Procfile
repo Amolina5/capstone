@@ -1,3 +1,3 @@
-release: python init_sqlite.py
-web: gunicorn config.wsgi --log-file -
-web: gunicorn config.wsgi --log-file -
+
+release: python manage.py collectstatic --noinput
+web: gunicorn config.wsgi --log-file 
