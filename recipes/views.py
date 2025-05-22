@@ -423,17 +423,23 @@ def chef_detail_view(request, slug):
 
 def chef_cameron_view(request):
     try:
-        # Change this line from 'cameron-quinn' to 'cameron'
         cameron_user = User.objects.get(username='Cameron')
         chef = Chef.objects.get(user=cameron_user)
         
         recipes = Recipe.objects.filter(author=cameron_user).order_by('-created_at')
+        
+        # TEMPORARY DEBUG - remove after testing
+        print(f"Found user: {cameron_user}")
+        print(f"Found chef: {chef}")
+        print(f"Recipe count: {recipes.count()}")
+        print(f"Recipes: {[r.title for r in recipes]}")
+        
         featured_recipes = recipes.filter(is_featured=True)[:3]
         recipe_count = recipes.count()
-        
         recent_recipes = recipes[:5]
         
-    except (User.DoesNotExist, Chef.DoesNotExist):
+    except (User.DoesNotExist, Chef.DoesNotExist) as e:
+        print(f"ERROR: {e}")  # TEMPORARY DEBUG
         chef = None
         recipes = []
         featured_recipes = []
@@ -521,7 +527,7 @@ def chef_wade_view(request):
 
 def chef_couple_view(request):
     try:
-        nathan_user = User.objects.filter(username='nathan-jambo-jade-jambo').first()
+        nathan_user = User.objects.filter(username='Nate').first()
 
         couple_chef = Chef.objects.filter(user=nathan_user).first() if nathan_user else None
         
