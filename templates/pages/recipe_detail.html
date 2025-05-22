@@ -17,8 +17,18 @@
                 <div class="recipe-author">
                     {% if chef and chef.image %}
                         <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-thumbnail">
+                    {% elif chef.slug == 'cameron-quinn' %}
+                        <img src="{% static 'img/cameron.jpg' %}" alt="Chef Cameron Quinn" class="chef-thumbnail">
+                    {% elif chef.slug == 'wade-alexandander' %}
+                        <img src="{% static 'img/wade.png' %}" alt="Chef Wade Alexander" class="chef-thumbnail">
+                    {% elif chef.slug == 'alex-molina' %}
+                        <img src="{% static 'img/alex.png' %}" alt="Chef Alex Molina" class="chef-thumbnail">
+                    {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                        <img src="{% static 'img/nate.png' %}" alt="Chef Nathan & Jade" class="chef-thumbnail">
+                    {% elif chef.slug == 'amanda-molina' %}
+                        <img src="{% static 'img/amanda.png' %}" alt="Amanda" class="chef-thumbnail">
                     {% else %}
-                        <img src="{% static 'img/default-chef.jpg' %}" alt="Chef" class="chef-thumbnail">
+                        <img src="{% static 'img/james.png' %}" alt="Chef" class="chef-thumbnail">
                     {% endif %}
                     
                     <span>By 
@@ -48,7 +58,60 @@
                 {% if recipe.image %}
                     <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-detail-image">
                 {% else %}
-                    <img src="{% static 'img/default-recipe.jpg' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                    {% comment %} Smart image assignment based on chef and recipe {% endcomment %}
+                    {% if chef.slug == 'cameron-quinn' %}
+                        {% if 'scallop' in recipe.title|lower %}
+                            <img src="{% static 'img/scallops.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'duck' in recipe.title|lower %}
+                            <img src="{% static 'img/duck.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'halibut' in recipe.title|lower %}
+                            <img src="{% static 'img/halbut.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% else %}
+                            <img src="{% static 'img/finedinning.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% endif %}
+                    {% elif chef.slug == 'wade-alexandander' %}
+                        {% if 'fries' in recipe.title|lower or 'loaded' in recipe.title|lower %}
+                            <img src="{% static 'img/fries.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'burger' in recipe.title|lower %}
+                            <img src="{% static 'img/burger.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'mac' in recipe.title|lower or 'cheese' in recipe.title|lower %}
+                            <img src="{% static 'img/mac.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% else %}
+                            <img src="{% static 'img/barfood.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% endif %}
+                    {% elif chef.slug == 'alex-molina' %}
+                        {% if 'ceviche' in recipe.title|lower %}
+                            <img src="{% static 'img/ceviche.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'salmon' in recipe.title|lower and 'mango' not in recipe.title|lower %}
+                            <img src="{% static 'img/salmon.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'ramen' in recipe.title|lower or 'miso' in recipe.title|lower %}
+                            <img src="{% static 'img/misoramen.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% else %}
+                            <img src="{% static 'img/homecooking.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% endif %}
+                    {% elif chef.slug == 'nathan-jambo-jade-jambo' %}
+                        {% if 'pizza' in recipe.title|lower %}
+                            <img src="{% static 'img/pan pizza.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'steak' in recipe.title|lower or 'new york' in recipe.title|lower %}
+                            <img src="{% static 'img/newyork.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'salmon' in recipe.title|lower and 'tuscan' in recipe.title|lower %}
+                            <img src="{% static 'img/tuskcan salmon.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% else %}
+                            <img src="{% static 'img/couple.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% endif %}
+                    {% elif chef.slug == 'amanda-molina' %}
+                        {% if 'cake' in recipe.title|lower or 'peep' in recipe.title|lower or 'dessert' in recipe.title|lower %}
+                            <img src="{% static 'img/peepcake.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'salmon' in recipe.title|lower and 'mango' in recipe.title|lower %}
+                            <img src="{% static 'img/salmonmango.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% elif 'soup' in recipe.title|lower %}
+                            <img src="{% static 'img/soup.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% else %}
+                            <img src="{% static 'img/food.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                        {% endif %}
+                    {% else %}
+                        <img src="{% static 'img/food.png' %}" alt="{{ recipe.title }}" class="recipe-detail-image">
+                    {% endif %}
                 {% endif %}
             </div>
             
