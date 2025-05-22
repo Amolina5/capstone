@@ -7,3 +7,5 @@ whitenoise
 python-dotenv
 pytz
 sqlparse>=0.3.1
+dj-database-url
+psycopg2-binary
