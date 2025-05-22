@@ -5,8 +5,5 @@ crispy-bootstrap4
 gunicorn
 whitenoise
 python-dotenv
-djongo
-pymongo>=3.12.0,<4.0.0
-dnspython
 pytz
 sqlparse>=0.3.1

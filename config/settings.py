@@ -68,18 +68,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
-# Get MongoDB connection string from environment variable
-# Database
-MONGO_URI = os.environ.get('MONGO_URI', '')
-
+# Database - Use SQLite for everything (simplest solution)
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'cookbook',
-        'CLIENT': {
-            'host': MONGO_URI,
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
