@@ -14,15 +14,15 @@
             <div class="chef-profile">
                 <div class="chef-header">
                     <div class="chef-image-container">
-                        {% if chef.image %}
+                        {% if chef and chef.image %}
                             <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
                         {% else %}
                             <img src="{% static 'img/alex.png' %}" alt="Chef Alex Molina" class="chef-image">
                         {% endif %}
                     </div>
                     <div class="chef-info">
-                        <h1 class="chef-name">{{ chef.name }}</h1>
-                        <p class="chef-specialty">{{ chef.specialty }}</p>
+                        <h1 class="chef-name">{{ chef.name|default:"Alex Molina" }}</h1>
+                        <p class="chef-specialty">{{ chef.specialty|default:"Home-Style Cooking" }}</p>
                         <div class="chef-social">
                             {% if chef.instagram %}
                                 <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -51,7 +51,7 @@
                         {% else %}
                             <p>Growing up in a household where money was tight taught me one of life's most valuable lessons: you don't need expensive restaurant meals to enjoy extraordinary food. In our home, financial constraints never limited the flavors that came from our kitchen. My family turned necessity into an art form, creating dishes that would have everyone in the neighborhood talking.</p>
                             
-                            <p>These early experiences shaped my understanding of food as more than just sustenance—it was our way of showing love, creativity, and pride despite our circumstances. The aromas that filled our modest home carried stories of heritage, resourcefulness, and community that no upscale restaurant could replicate.</p>
+                            <p>These early experiences shaped my understanding of food as more than just sustenance—it was our way of showing love, creativity, and community that no upscale restaurant could replicate.</p>
                         {% endif %}
                     </div>
                 </div>
@@ -75,6 +75,17 @@
                                         <div class="dish-image-placeholder">
                                             {% if recipe.image %}
                                                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                            {% else %}
+                                                {% comment %} Smart image assignment for Alex's recipes {% endcomment %}
+                                                {% if 'ceviche' in recipe.title|lower %}
+                                                    <img src="{% static 'img/ceviche.png' %}" alt="{{ recipe.title }}">
+                                                {% elif 'salmon' in recipe.title|lower and 'mango' not in recipe.title|lower %}
+                                                    <img src="{% static 'img/salmon.png' %}" alt="{{ recipe.title }}">
+                                                {% elif 'ramen' in recipe.title|lower or 'miso' in recipe.title|lower %}
+                                                    <img src="{% static 'img/misoramen.png' %}" alt="{{ recipe.title }}">
+                                                {% else %}
+                                                    <img src="{% static 'img/homecooking.png' %}" alt="{{ recipe.title }}">
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                         <h3>{{ recipe.title }}</h3>
@@ -91,7 +102,9 @@
                                 {% endfor %}
                             {% else %}
                                 <div class="dish-item" id="dish-ceviche">
-                                    <div class="dish-image-placeholder"></div>
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/ceviche.png' %}" alt="Fresh Ceviche">
+                                    </div>
                                     <h3>Fresh Ceviche</h3>
                                     <p>A vibrant celebration of seafood transformed by citrus, combining delicate textures with bold flavors.</p>
                                     <span class="dish-details-btn">View Details</span>
@@ -99,22 +112,26 @@
                                         <p>My ceviche combines fresh white fish, shrimp, lime juice, cilantro, and a hint of jalapeño for a bright, refreshing starter.</p>
                                     </div>
                                 </div>
-                                <div class="dish-item" id="dish-ribeye">
-                                    <div class="dish-image-placeholder"></div>
-                                    <h3>Bone-in Ribeye with Mushroom Sauce</h3>
-                                    <p>A rustic yet sophisticated dish that honors the beauty of perfectly cooked beef enhanced by earthy mushrooms.</p>
+                                <div class="dish-item" id="dish-salmon">
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/salmon.png' %}" alt="Simple Salmon Dinner">
+                                    </div>
+                                    <h3>Simple Salmon Dinner</h3>
+                                    <p>Easy pan-seared salmon with herbs that anyone can master - no special equipment required.</p>
                                     <span class="dish-details-btn">View Details</span>
                                     <div class="dish-details">
-                                        <p>This dish features a perfectly seared ribeye steak with a rich sauce of wild mushrooms, herbs, and a touch of cream.</p>
+                                        <p>This dish features perfectly seared salmon with fresh herbs and a touch of lemon for a wholesome family meal.</p>
                                     </div>
                                 </div>
-                                <div class="dish-item" id="dish-soup">
-                                    <div class="dish-image-placeholder"></div>
-                                    <h3>Coconut Thai Soup</h3>
-                                    <p>A harmonious blend of aromatic herbs, creamy coconut, and perfectly balanced spices that transport you to Southeast Asia.</p>
+                                <div class="dish-item" id="dish-ramen">
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/misoramen.png' %}" alt="Homemade Miso Ramen">
+                                    </div>
+                                    <h3>Homemade Miso Ramen</h3>
+                                    <p>Comforting bowl of miso ramen with rich broth and fresh toppings - perfect for cold days.</p>
                                     <span class="dish-details-btn">View Details</span>
                                     <div class="dish-details">
-                                        <p>My version of Tom Kha Gai uses lemongrass, galangal, coconut milk, and tender chicken for a comforting bowl of warmth.</p>
+                                        <p>My version uses traditional miso paste with chicken broth and fresh vegetables for a nourishing, warming meal.</p>
                                     </div>
                                 </div>
                             {% endif %}

@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Chef Cameron Quinn | Cookbook{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/chefs.css">
-<link rel="stylesheet" href="/static/css/cameron.css">
+<link rel="stylesheet" href="{% static 'css/chefs.css' %}">
+<link rel="stylesheet" href="{% static 'css/cameron.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,18 +14,39 @@
     <div class="container">
         <div class="chef-hero-content">
             <div class="chef-hero-image">
-                <img src="/static/img/cameron.jpg" alt="Chef Cameron Quinn" class="chef-image">
+                {% if chef and chef.image %}
+                    <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+                {% else %}
+                    <img src="{% static 'img/cameron.jpg' %}" alt="Chef Cameron Quinn" class="chef-image">
+                {% endif %}
             </div>
             <div class="chef-hero-text">
-                <h1>Cameron Quinn</h1>
-                <p class="chef-specialty">Fine Dining Specialist</p>
-                <p class="chef-bio-extended">Three-Michelin-star chef specializing in elevated cuisine with a focus on locally-sourced ingredients and artistic presentation.</p>
+                <h1>{{ chef.name|default:"Cameron Quinn" }}</h1>
+                <p class="chef-specialty">{{ chef.specialty|default:"Fine Dining Specialist" }}</p>
+                <p class="chef-bio-extended">
+                    {% if chef and chef.bio %}
+                        {{ chef.bio|truncatewords:30 }}
+                    {% else %}
+                        Three-Michelin-star chef specializing in elevated cuisine with a focus on locally-sourced ingredients and artistic presentation.
+                    {% endif %}
+                </p>
                 <div class="chef-social-large">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    {% if chef.instagram %}
+                        <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% else %}
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
+                    {% if chef.twitter %}
+                        <a href="{{ chef.twitter }}" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    {% else %}
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+                    {% if chef.youtube %}
+                        <a href="{{ chef.youtube }}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    {% else %}
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    {% endif %}
                 </div>
-                
                 
                 {% if user.username == 'cameron' %}
                 <div class="recipe-meta">
@@ -37,21 +59,24 @@
     </div>
 </section>
 
-
 <section class="chef-bio-section">
     <div class="container">
         <h2 class="section-title">About Chef Cameron</h2>
         <div class="chef-bio-content">
             <div class="chef-bio-text">
-                <p>Cameron Quinn is one of the world's most celebrated culinary artists, renowned for his meticulous attention to detail and innovative approach to fine dining. With three Michelin stars to his name, Chef Quinn has established himself as a pioneer in the culinary world.</p>
-                
-                <p>Born and raised in St. Louis, Missouri, Cameron developed a deep passion for cooking at a young age. His culinary journey began in his family kitchen, where he first discovered the joy of creating dishes that brought people together.</p>
-                
-                <p>After honing his skills at culinary school, Cameron's career took him to the prestigious Little Inn at Washington Resort in Seattle, where he worked under renowned chefs and refined his techniques. This formative experience shaped his approach to fine dining and helped him develop his signature style.</p>
-                
-                <p>Currently, Chef Quinn is showcasing his talents at Benu, where he continues to push culinary boundaries and create extraordinary dining experiences. His cooking philosophy centers around showcasing the natural flavors of premium ingredients through sophisticated techniques that enhance rather than mask their inherent qualities.</p>
-                
-                <p>Chef Quinn is particularly known for his artistic plating, often described as "edible art" by food critics. His signature style combines classic techniques with contemporary presentations, resulting in dishes that are as visually stunning as they are delicious.</p>
+                {% if chef and chef.bio %}
+                    {{ chef.bio|linebreaks }}
+                {% else %}
+                    <p>Cameron Quinn is one of the world's most celebrated culinary artists, renowned for his meticulous attention to detail and innovative approach to fine dining. With three Michelin stars to his name, Chef Quinn has established himself as a pioneer in the culinary world.</p>
+                    
+                    <p>Born and raised in St. Louis, Missouri, Cameron developed a deep passion for cooking at a young age. His culinary journey began in his family kitchen, where he first discovered the joy of creating dishes that brought people together.</p>
+                    
+                    <p>After honing his skills at culinary school, Cameron's career took him to the prestigious Little Inn at Washington Resort in Seattle, where he worked under renowned chefs and refined his techniques. This formative experience shaped his approach to fine dining and helped him develop his signature style.</p>
+                    
+                    <p>Currently, Chef Quinn is showcasing his talents at Benu, where he continues to push culinary boundaries and create extraordinary dining experiences. His cooking philosophy centers around showcasing the natural flavors of premium ingredients through sophisticated techniques that enhance rather than mask their inherent qualities.</p>
+                    
+                    <p>Chef Quinn is particularly known for his artistic plating, often described as "edible art" by food critics. His signature style combines classic techniques with contemporary presentations, resulting in dishes that are as visually stunning as they are delicious.</p>
+                {% endif %}
             </div>
             
             <div class="chef-stats">
@@ -99,7 +124,6 @@
     </div>
 </section>
 
-
 <section class="chef-tips-section">
     <div class="container">
         <h2 class="section-title">Cooking Philosophy</h2>
@@ -122,19 +146,17 @@
             </div>
             
             <div class="chef-tips-image">
-                <img src="/static/img/chefs/cameron-quinn.jpg" alt="Chef Cameron cooking">
+                <img src="{% static 'img/chefs/cameron-quinn.jpg' %}" alt="Chef Cameron cooking">
             </div>
         </div>
     </div>
 </section>
-
 
 <section class="chef-recipes-section">
     <div class="container">
         <h2 class="section-title">Cameron's Recipes</h2>
         
         {% if recipes %}
-            
             {% if user.username == 'cameron' %}
             <div class="recipe-management">
                 <div class="management-tools">
@@ -155,9 +177,16 @@
                             {% if recipe.image %}
                                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
                             {% else %}
-                                <div class="recipe-card-placeholder">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
+                                {% comment %} Smart image assignment for Cameron's fine dining recipes {% endcomment %}
+                                {% if 'scallop' in recipe.title|lower %}
+                                    <img src="{% static 'img/scallops.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% elif 'duck' in recipe.title|lower %}
+                                    <img src="{% static 'img/duck.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% elif 'halibut' in recipe.title|lower %}
+                                    <img src="{% static 'img/halbut.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% else %}
+                                    <img src="{% static 'img/finedinning.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% endif %}
                             {% endif %}
                         </div>
                         <div class="recipe-card-body">
@@ -170,7 +199,6 @@
                             </div>
                             <div class="recipe-actions">
                                 <a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}" class="btn btn-outline btn-sm">View Recipe</a>
-                                
                                 
                                 {% if user.username == 'cameron' %}
                                 <div class="recipe-admin-actions">
@@ -203,7 +231,6 @@
     </div>
 </section>
 
-
 <section class="back-to-section">
     <div class="container">
         <a href="{% url 'chefs' %}" class="btn btn-outline btn-lg">
@@ -216,9 +243,7 @@
 {% block extra_js %}
 {{ block.super }}
 <script>
-    
     document.addEventListener('DOMContentLoaded', function() {
-        
         const recipeCards = document.querySelectorAll('.recipe-card');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

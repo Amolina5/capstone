@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Amanda's Family Cookbook{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/chefs.css">
-<link rel="stylesheet" href="/static/css/amanda.css">
+<link rel="stylesheet" href="{% static 'css/chefs.css' %}">
+<link rel="stylesheet" href="{% static 'css/amanda.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,15 +13,29 @@
     <div class="container">
         <div class="cookbook-hero-content">
             <div class="cookbook-image">
-                <img src="/static/img/amanda.png" alt="Amanda" class="chef-image">
+                {% if chef and chef.image %}
+                    <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+                {% else %}
+                    <img src="{% static 'img/amanda.png' %}" alt="Amanda" class="chef-image">
+                {% endif %}
                 <div class="photo-frame-effect"></div>
             </div>
             <div class="cookbook-hero-text">
                 <h1>Amanda's Family Cookbook</h1>
                 <p class="cookbook-subtitle">Preserving Generations of Family Recipes</p>
-                <p class="cookbook-bio">Creating a collection of cherished family recipes to pass down to my children, inspired by the cooking traditions my grandmother shared with me.</p>
+                <p class="cookbook-bio">
+                    {% if chef and chef.bio %}
+                        {{ chef.bio|linebreaks }}
+                    {% else %}
+                        Creating a collection of cherished family recipes to pass down to my children, inspired by the cooking traditions my grandmother shared with me.
+                    {% endif %}
+                </p>
                 <div class="cookbook-social">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% if chef.instagram %}
+                        <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% else %}
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
                     <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 </div>
@@ -55,19 +70,19 @@
             <div class="cookbook-photos">
                 <div class="photo-grid">
                     <div class="photo-item">
-                        <img src="/static/img/cookbook/grandma-cooking.jpg" alt="Grandmother cooking">
+                        <img src="{% static 'img/cookbook/grandma-cooking.jpg' %}" alt="Grandmother cooking">
                         <p class="photo-caption">Grandma Jean, Christmas 1978</p>
                     </div>
                     <div class="photo-item">
-                        <img src="/static/img/cookbook/family-dinner.jpg" alt="Family dinner">
+                        <img src="{% static 'img/cookbook/family-dinner.jpg' %}" alt="Family dinner">
                         <p class="photo-caption">Sunday dinner tradition</p>
                     </div>
                     <div class="photo-item">
-                        <img src="/static/img/cookbook/recipe-card.jpg" alt="Handwritten recipe card">
+                        <img src="{% static 'img/cookbook/recipe-card.jpg' %}" alt="Handwritten recipe card">
                         <p class="photo-caption">Original apple pie recipe</p>
                     </div>
                     <div class="photo-item">
-                        <img src="/static/img/cookbook/kitchen-kids.jpg" alt="Kids in the kitchen">
+                        <img src="{% static 'img/cookbook/kitchen-kids.jpg' %}" alt="Kids in the kitchen">
                         <p class="photo-caption">Teaching the next generation</p>
                     </div>
                 </div>
@@ -144,9 +159,16 @@
                             {% if recipe.image %}
                                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-card-img">
                             {% else %}
-                                <div class="recipe-card-placeholder">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
+                                {% comment %} Smart image assignment for Amanda's family recipes {% endcomment %}
+                                {% if 'cake' in recipe.title|lower or 'peep' in recipe.title|lower or 'dessert' in recipe.title|lower %}
+                                    <img src="{% static 'img/peepcake.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% elif 'salmon' in recipe.title|lower and 'mango' in recipe.title|lower %}
+                                    <img src="{% static 'img/salmonmango.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% elif 'soup' in recipe.title|lower %}
+                                    <img src="{% static 'img/soup.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% else %}
+                                    <img src="{% static 'img/food.png' %}" alt="{{ recipe.title }}" class="recipe-card-img">
+                                {% endif %}
                             {% endif %}
                             <div class="recipe-card-frame"></div>
                         </div>

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Chef Wade Alexander - Bar Food & Comfort Cuisine{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/wade.css">
+<link rel="stylesheet" href="{% static 'css/wade.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,30 +14,51 @@
             <div class="chef-profile">
                 <div class="chef-header">
                     <div class="chef-image-container">
-                        <img src="/static/img/wade.png" alt="Chef Wade Alexander" class="chef-image">
+                        {% if chef and chef.image %}
+                            <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+                        {% else %}
+                            <img src="{% static 'img/wade.png' %}" alt="Chef Wade Alexander" class="chef-image">
+                        {% endif %}
                     </div>
                     <div class="chef-info">
-                        <h1 class="chef-name">Wade Alexander</h1>
-                        <p class="chef-specialty">Bar Food & Comfort Cuisine</p>
+                        <h1 class="chef-name">{{ chef.name|default:"Wade Alexander" }}</h1>
+                        <p class="chef-specialty">{{ chef.specialty|default:"Bar Food & Comfort Cuisine" }}</p>
                         <div class="chef-social">
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% if chef.instagram %}
+                                <a href="{{ chef.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if chef.twitter %}
+                                <a href="{{ chef.twitter }}" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if chef.youtube %}
+                                <a href="{{ chef.youtube }}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% else %}
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                
                 <div class="chef-section" id="journey">
                     <h2>My Culinary Journey</h2>
                     <div class="chef-content">
-                        <p>My road to culinary excellence began in the most unlikely of places – behind the bar of a
-                            busy gastropub in college. What started as a way to pay tuition quickly evolved into a
-                            passion for creating elevated versions of classic comfort foods that pair perfectly with
-                            craft beer and cocktails.</p>
+                        {% if chef and chef.bio %}
+                            {{ chef.bio|linebreaks }}
+                        {% else %}
+                            <p>My road to culinary excellence began in the most unlikely of places – behind the bar of a
+                                busy gastropub in college. What started as a way to pay tuition quickly evolved into a
+                                passion for creating elevated versions of classic comfort foods that pair perfectly with
+                                craft beer and cocktails.</p>
 
-                        <p>After years of experimenting with pub grub classics and seeing customers' faces light up with
-                            each bite, I realized my calling wasn't in fine dining – it was in transforming everyday
-                            favorites into something extraordinary that brings people together in a relaxed atmosphere.
-                        </p>
+                            <p>After years of experimenting with pub grub classics and seeing customers' faces light up with
+                                each bite, I realized my calling wasn't in fine dining – it was in transforming everyday
+                                favorites into something extraordinary that brings people together in a relaxed atmosphere.
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -60,53 +82,93 @@
                     <h2>Signature Dishes</h2>
                     <div class="chef-content">
                         <div class="dish-list">
-                            <div class="dish-item" id="dish-fries">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Gourmet Loaded Fries</h3>
-                                <p>Triple-cooked fries topped with slow-braised pulled pork, caramelized onions, and
-                                    smoked cheddar sauce.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>These aren't your average loaded fries. The potatoes are soaked overnight to
-                                        remove excess starch, then triple-cooked for the perfect crispy exterior and
-                                        fluffy interior. Topped with 12-hour braised pork shoulder, beer-caramelized
-                                        onions, and a smoky cheddar sauce made with local craft beer.</p>
+                            {% if featured_recipes %}
+                                {% for recipe in featured_recipes|slice:":3" %}
+                                    <div class="dish-item" id="dish-{{ forloop.counter }}">
+                                        <div class="dish-image-placeholder">
+                                            {% if recipe.image %}
+                                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                            {% else %}
+                                                {% comment %} Smart image assignment for Wade's bar food recipes {% endcomment %}
+                                                {% if 'fries' in recipe.title|lower or 'loaded' in recipe.title|lower %}
+                                                    <img src="{% static 'img/fries.png' %}" alt="{{ recipe.title }}">
+                                                {% elif 'burger' in recipe.title|lower %}
+                                                    <img src="{% static 'img/burger.png' %}" alt="{{ recipe.title }}">
+                                                {% elif 'mac' in recipe.title|lower or 'cheese' in recipe.title|lower %}
+                                                    <img src="{% static 'img/mac.png' %}" alt="{{ recipe.title }}">
+                                                {% else %}
+                                                    <img src="{% static 'img/barfood.png' %}" alt="{{ recipe.title }}">
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                        <h3>{{ recipe.title }}</h3>
+                                        <p>{{ recipe.description|truncatewords:20 }}</p>
+                                        <span class="dish-details-btn">View Details</span>
+                                        <div class="dish-details">
+                                            <p>{{ recipe.description }}</p>
+                                            <div class="recipe-meta">
+                                                <span><i class="far fa-clock"></i> Prep: {{ recipe.prep_time }} min</span>
+                                                <span><i class="fas fa-fire"></i> Cook: {{ recipe.cook_time }} min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="dish-item" id="dish-fries">
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/fries.png' %}" alt="Gourmet Loaded Fries">
+                                    </div>
+                                    <h3>Gourmet Loaded Fries</h3>
+                                    <p>Triple-cooked fries topped with slow-braised pulled pork, caramelized onions, and
+                                        smoked cheddar sauce.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>These aren't your average loaded fries. The potatoes are soaked overnight to
+                                            remove excess starch, then triple-cooked for the perfect crispy exterior and
+                                            fluffy interior. Topped with 12-hour braised pork shoulder, beer-caramelized
+                                            onions, and a smoky cheddar sauce made with local craft beer.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="dish-item" id="dish-burger">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Craft Beer Burger</h3>
-                                <p>Hand-pressed patty infused with stout, topped with beer-candied bacon, aged cheddar,
-                                    and special sauce on a pretzel bun.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>This signature burger features grass-fed beef mixed with reduced stout for depth
-                                        of flavor. The bacon is candied with a reduction of brown sugar and IPA, while
-                                        the special sauce combines house-made aioli, beer mustard, and roasted garlic.
-                                        Served on a fresh-baked pretzel bun with butter lettuce and heirloom tomato.</p>
+                                <div class="dish-item" id="dish-burger">
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/burger.png' %}" alt="Craft Beer Burger">
+                                    </div>
+                                    <h3>Craft Beer Burger</h3>
+                                    <p>Hand-pressed patty infused with stout, topped with beer-candied bacon, aged cheddar,
+                                        and special sauce on a pretzel bun.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>This signature burger features grass-fed beef mixed with reduced stout for depth
+                                            of flavor. The bacon is candied with a reduction of brown sugar and IPA, while
+                                            the special sauce combines house-made aioli, beer mustard, and roasted garlic.
+                                            Served on a fresh-baked pretzel bun with butter lettuce and heirloom tomato.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="dish-item" id="dish-mac">
-                                <div class="dish-image-placeholder"></div>
-                                <h3>Truffle Mac & Cheese</h3>
-                                <p>Five-cheese macaroni with black truffle, crispy pancetta, and garlic breadcrumbs,
-                                    finished with a drizzle of truffle oil.</p>
-                                <span class="dish-details-btn">View Details</span>
-                                <div class="dish-details">
-                                    <p>This elevated take on the ultimate comfort food combines cavatappi pasta with a
-                                        silky sauce of aged cheddar, gruyère, fontina, parmesan, and creamy brie. Black
-                                        truffle adds earthy depth, while crispy pancetta gives a salty crunch. Topped
-                                        with toasted garlic breadcrumbs and a light drizzle of truffle oil.</p>
+                                <div class="dish-item" id="dish-mac">
+                                    <div class="dish-image-placeholder">
+                                        <img src="{% static 'img/mac.png' %}" alt="Truffle Mac & Cheese">
+                                    </div>
+                                    <h3>Truffle Mac & Cheese</h3>
+                                    <p>Five-cheese macaroni with black truffle, crispy pancetta, and garlic breadcrumbs,
+                                        finished with a drizzle of truffle oil.</p>
+                                    <span class="dish-details-btn">View Details</span>
+                                    <div class="dish-details">
+                                        <p>This elevated take on the ultimate comfort food combines cavatappi pasta with a
+                                            silky sauce of aged cheddar, gruyère, fontina, parmesan, and creamy brie. Black
+                                            truffle adds earthy depth, while crispy pancetta gives a salty crunch. Topped
+                                            with toasted garlic breadcrumbs and a light drizzle of truffle oil.</p>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                
                 <div class="chef-section" id="philosophy">
                     <h2>Cooking Philosophy</h2>
                     <div class="chef-content philosophy-content">
                         <div class="philosophy-image">
-                            <img src="/static/img/barfood.png" alt="Bar food philosophy">
+                            <img src="{% static 'img/barfood.png' %}" alt="Bar food philosophy">
                         </div>
                         <div class="philosophy-text">
                             <p>My approach to cooking centers on the belief that great food doesn't have to be
@@ -123,13 +185,12 @@
                     </div>
                 </div>
 
-
                 <div class="chef-section" id="stats">
                     <h2>Recipe Collection</h2>
                     <div class="chef-content">
                         <div class="stats-container">
                             <div class="stat-item" id="stat-total">
-                                <span class="stat-number">24</span>
+                                <span class="stat-number">{{ recipe_count|default:"24" }}</span>
                                 <span class="stat-label">Total Recipes</span>
                             </div>
                             <div class="stat-item" id="stat-category">
@@ -137,12 +198,12 @@
                                 <span class="stat-label">Top Category</span>
                             </div>
                             <div class="stat-item" id="stat-featured">
-                                <span class="stat-number">8</span>
+                                <span class="stat-number">{{ featured_recipes|length|default:"8" }}</span>
                                 <span class="stat-label">Featured Recipes</span>
                             </div>
                         </div>
                         <div class="view-all-recipes">
-                            <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">View All Recipes</a>
+                            <a href="{% url 'all_recipes' %}" class="btn btn-primary">View All Recipes</a>
                         </div>
                     </div>
                 </div>
