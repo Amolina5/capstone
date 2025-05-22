@@ -423,7 +423,8 @@ def chef_detail_view(request, slug):
 
 def chef_cameron_view(request):
     try:
-        cameron_user = User.objects.get(username='cameron-quinn')
+        # Change this line from 'cameron-quinn' to 'cameron'
+        cameron_user = User.objects.get(username='cameron')
         chef = Chef.objects.get(user=cameron_user)
         
         recipes = Recipe.objects.filter(author=cameron_user).order_by('-created_at')
