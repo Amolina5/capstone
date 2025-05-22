@@ -566,7 +566,7 @@ def chef_couple_view(request):
 def chef_amanda_view(request):
     try:
   
-        amanda_user = User.objects.filter(username='amanda-molina').first()
+        amanda_user = User.objects.filter(username='Amanda').first()
         chef = Chef.objects.filter(user=amanda_user).first() if amanda_user else None
         
         if amanda_user:
